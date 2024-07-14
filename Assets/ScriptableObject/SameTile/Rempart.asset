@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1f9f06fda9b974b9d5dc0ef2e39373, type: 3}
+  m_Name: Rempart
+  m_EditorClassIdentifier: 
+  ceil:
+  - {fileID: 4634264230318550623, guid: ec3cca769237b9c418266a50a63b15cc, type: 3}
+  - {fileID: 4634264230318550623, guid: 48d99ed981457b341ae5c090c8590f2c, type: 3}
+  - {fileID: 4634264230318550623, guid: 7db77bdf1f3a46341bd5cd08d5319bdd, type: 3}
+  - {fileID: 4634264230318550623, guid: 48485755a72fcbb42bf43c012743fcf0, type: 3}
+  - {fileID: 4634264230318550623, guid: 7120e5ca86f278a4cbf8b6038ce0891f, type: 3}
+  - {fileID: 4634264230318550623, guid: c642cd01bbb68404d94b0f2c89b7bf57, type: 3}
+  tileName: []

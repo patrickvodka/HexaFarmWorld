@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ceil:
   - {fileID: 11400000, guid: 0dee92681b174fb418abfff38762a7b1, type: 2}
+  - {fileID: 11400000, guid: bce2e46d2a12ba34a8987dae6778c045, type: 2}
   tileSetName:
   - Road
+  - Rempart

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 public class BorderCheckTester : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class BorderCheckTester : MonoBehaviour
     // Dictionnaire pour stocker les tuiles sur la grille hexagonale
     public Dictionary<Vector3, GameObject> HexGridDictionary = new Dictionary<Vector3, GameObject>();
     // Liste pour savoir si toutes les nodes ont été collapsées
-    [FormerlySerializedAs("HexGridCollapsed")] public List<Vector3> HexGridCollapsedYet = new List<Vector3>();
+    public List<Vector3> HexGridCollapsedYet = new List<Vector3>();
     // Liste des directions hexagonales (voisins)
     private List<Vector3> directions = new List<Vector3>()
     {

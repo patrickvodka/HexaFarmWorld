@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 4816736110729737586}
   - component: {fileID: 181256407358912527}
   - component: {fileID: 8161294664238118489}
+  - component: {fileID: -3245043510912558553}
   m_Layer: 0
   m_Name: Hexagon_Rampart_180
   m_TagString: Untagged
@@ -144,14 +145,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4634264230318550623}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 695023351344034894}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4816736110729737586
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -224,6 +225,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4575734979276873811, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
+--- !u!114 &-3245043510912558553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4634264230318550623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9db6663a9e6e1a4cab681eee4335bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellType:
+    name: 
+    prefab: {fileID: 0}
+    tier: 0
+    borders: 050000000000000000000000050000000000000000000000
+  ceilClass:
+    hexCoord: {x: 0, y: 0, z: 0}
+    isCollapsed: 0
+    selectedPrefab: {fileID: 0}
 --- !u!1 &5090656530377870418
 GameObject:
   m_ObjectHideFlags: 0
