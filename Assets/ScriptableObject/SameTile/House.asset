@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1f9f06fda9b974b9d5dc0ef2e39373, type: 3}
+  m_Name: House
+  m_EditorClassIdentifier: 
+  ceil:
+  - {fileID: 224554775205978618, guid: 51f66fdfaab50624a83e2f67c6715e58, type: 3}
+  - {fileID: 224554775205978618, guid: daefa43f844a23c4199879cfc47815d5, type: 3}
+  - {fileID: 224554775205978618, guid: b222a2e1034152e4b8a08ae88202c776, type: 3}
+  - {fileID: 1842018494405818872, guid: b56efff8b041c8147b03847864ca1707, type: 3}
+  - {fileID: 6241494721674812603, guid: eb6db9d71ff252246ab3379da029c3aa, type: 3}
+  - {fileID: 2600746595237644426, guid: 7d3941bad62a3f24d869e537bc5d56c1, type: 3}
+  - {fileID: 957422459388589651, guid: cc9750d291c85ed4e8256fa23f2c9f8a, type: 3}
+  - {fileID: 4279571813542505656, guid: fc896c75e6118604f85f0fdb35f2becf, type: 3}
+  - {fileID: 2104935890637947601, guid: feff5fa820941c24091665f4d7859abe, type: 3}
+  - {fileID: 1773451050422583074, guid: f6bd09337a5d6054186023bd2b1cc42e, type: 3}
+  - {fileID: 8701935811992852301, guid: 7409be4e5dee7ec42b70bce4a8001718, type: 3}
+  - {fileID: 7419267589679758871, guid: 4c939cac5403c5b4abcd9fa61fc22c7c, type: 3}
+  - {fileID: 1413493693126873498, guid: 58e1321f5502c7e46b4e281e566776f7, type: 3}
+  - {fileID: 3796719669715695607, guid: 698f00179537cd8498d3cf2f513678e9, type: 3}
+  - {fileID: 8260061324937720055, guid: 4651a60edf5b13b4b968c66e33034376, type: 3}
+  tileName: []
