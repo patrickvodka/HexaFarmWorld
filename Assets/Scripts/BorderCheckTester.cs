@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-
+using UnityEngine.Serialization;
 
 public class BorderCheckTester : MonoBehaviour
 {
@@ -17,7 +16,10 @@ public class BorderCheckTester : MonoBehaviour
     // Dictionnaire pour stocker les tuiles sur la grille hexagonale
     public Dictionary<Vector3, GameObject> HexGridDictionary = new Dictionary<Vector3, GameObject>();
     // Liste pour savoir si toutes les nodes ont été collapsées
-    public List<Vector3> HexGridCollapsedYet = new List<Vector3>();
+    [FormerlySerializedAs("HexGridCollapsedYet")] public List<Vector3> HexGridNotCollapsedYet = new List<Vector3>();
+    // Liste des tuiles qui doivent être vérifiées mais ne doivent pas être marquées comme collapsed
+    public List<Vector3> TilesWhoNeedToGetCheck = new List<Vector3>();
+    private List<Vector3> CheckedButNotCollapsedTiles = new List<Vector3>();
     // Liste des directions hexagonales (voisins)
     private List<Vector3> directions = new List<Vector3>()
     {
@@ -86,7 +88,7 @@ public class BorderCheckTester : MonoBehaviour
                         HexGridDictionary.Add(hexCoord, currentTile);
 
                         // Ajouter la tuile à la liste des tuiles non collapsed
-                        HexGridCollapsedYet.Add(hexCoord);
+                        HexGridNotCollapsedYet.Add(hexCoord);
                     }
                 }
             }
@@ -99,34 +101,57 @@ public class BorderCheckTester : MonoBehaviour
             if (CenterTile != null)
             {
                 CenterTile.ceilClass.isCollapsed = true;
-                HexGridCollapsedYet.Remove(new Vector3(0, 0, 0));
+                HexGridNotCollapsedYet.Remove(new Vector3(0, 0, 0));
             }
             else
             {
                 Debug.LogError("Problème de génération important");
             }
-
-            
         }
     }
+    
 
     private IEnumerator CheckBordersProcess()
     {
-        // Tant que la liste des tuiles non collapsed n'est pas vide
-        while (HexGridCollapsedYet.Count > 0)
+        // Initial collapse check for the starting tile
+        if (HexGridNotCollapsedYet.Count > 0)
         {
-            // Chercher la tuile avec le plus de voisins collapsed
-            GameObject bestTile = FindTileWithMostCollapsedNeighbors();
-            if (bestTile != null)
+            GameObject initialTile = HexGridDictionary[new Vector3(0, 0, 0)];
+            Debug.Log($"Lancement du check des bordures pour {initialTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
+            yield return StartCoroutine(CheckBordersWithDelay(initialTile.transform, true));
+        }
+
+        // Process subsequent border checks
+        while (HexGridNotCollapsedYet.Count > 0 || TilesWhoNeedToGetCheck.Count > 0)
+        {
+            if (TilesWhoNeedToGetCheck.Count > 0)
             {
-                Debug.Log($"Lancement du check des bordures pour {bestTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
-                // Lancer la coroutine pour vérifier les bordures de cette tuile
-                yield return StartCoroutine(CheckBordersWithDelay(bestTile.transform));
+                // Traiter les tuiles dans TilesWhoNeedToGetCheck sans collapse
+                while (TilesWhoNeedToGetCheck.Count > 0)
+                {
+                    Vector3 tileCoord = TilesWhoNeedToGetCheck[0];
+                    TilesWhoNeedToGetCheck.RemoveAt(0);
+                    if (HexGridDictionary.TryGetValue(tileCoord, out GameObject tileObject))
+                    {
+                        Debug.Log($"Vérification des bordures pour {tileCoord}");
+                        yield return StartCoroutine(CheckBordersWithDelay(tileObject.transform, false));
+                    }
+                }
             }
             else
             {
-                Debug.LogWarning("Aucune tuile trouvée pour le check des bordures.");
-                yield break;
+                // Chercher la prochaine tuile pour un collapse check
+                GameObject bestTile = FindTileWithMostCollapsedNeighbors();
+                if (bestTile != null)
+                {
+                    Debug.Log($"Lancement du check des bordures pour {bestTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
+                    yield return StartCoroutine(CheckBordersWithDelay(bestTile.transform, true));
+                }
+                else
+                {
+                    Debug.LogWarning("Aucune tuile trouvée pour le check des bordures.");
+                    yield break;
+                }
             }
         }
 
@@ -138,7 +163,7 @@ public class BorderCheckTester : MonoBehaviour
         GameObject bestTile = null;
         int maxCollapsedNeighbors = -1;
 
-        foreach (Vector3 hexCoord in HexGridCollapsedYet)
+        foreach (Vector3 hexCoord in HexGridNotCollapsedYet)
         {
             if (HexGridDictionary.TryGetValue(hexCoord, out GameObject tileObject))
             {
@@ -176,135 +201,142 @@ public class BorderCheckTester : MonoBehaviour
         return bestTile;
     }
 
-    private IEnumerator CheckBordersWithDelay(Transform targetTileTransform)
+   private IEnumerator CheckBordersWithDelay(Transform targetTileTransform, bool collapseTile)
+{
+    BaseTile baseTile = targetTileTransform.GetComponent<BaseTile>();
+    if (baseTile != null)
     {
-        // Récupérer le composant BaseTile attaché à la transform cible
-        BaseTile baseTile = targetTileTransform.GetComponent<BaseTile>();
-        if (baseTile != null)
+        Vector3 baseHexCoord = baseTile.ceilClass.hexCoord;
+        int[] borderArray = new int[6];
+        for (int i = 0; i < 6; i++)
         {
-            Vector3 baseHexCoord = baseTile.ceilClass.hexCoord; // Obtenir la coordonnée hexagonale de la tuile de base
+            borderArray[i] = 0; // Initialiser les bordures à 0
+        }
 
-            // Liste pour stocker les types de bordures des tuiles voisines collapsed
-            int[] borderArray = new int[6];
-            for (int i = 0; i < 6; i++)
+        bool hasCollapsedNeighbor = false;
+
+        // Vérification des bordures des voisins
+        for (int i = 0; i < directions.Count; i++)
+        {
+            Vector3 neighborCoord = baseHexCoord + directions[i];
+            if (HexGridDictionary.ContainsKey(neighborCoord))
             {
-                borderArray[i] = 0;// Initialiser les bordures à 0 ou 1 random // test  = 0 ici par default bug sur les coté dois changer ilmportant
-                Debug.LogWarning(borderArray[i]);
-            }
-
-            bool hasCollapsedNeighbor = false; // Indicateur pour savoir si on a des voisins collapsed
-
-            // Vérification des bordures des voisins
-            for (int i = 0; i < directions.Count; i++)
-            {
-                Vector3 neighborCoord = baseHexCoord + directions[i]; // Calculer la coordonnée du voisin
-
-                // Si la grille contient la coordonnée du voisin
-                if (HexGridDictionary.ContainsKey(neighborCoord))
+                BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
+                if (neighborTile != null)
                 {
-                    BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
-                    
-                    // si le voisin est collapsed
                     if (neighborTile.ceilClass.isCollapsed)
                     {
                         hasCollapsedNeighbor = true;
-
-                        // Récupérer la rotation en Y du voisin et la normaliser entre 0 et 360 degrés
                         float neighborRotationY = neighborTile.transform.rotation.eulerAngles.y;
-                        int NbrOfRotation = ((int)neighborRotationY / 60) % 6; // Nombre de rotations de 60 degrés
-
-                        // Copier les bordures du voisin dans un nouvel array
+                        int NbrOfRotation = ((int)neighborRotationY / 60) % 6;
                         int[] adjustedBorders = new int[6];
                         neighborTile.cellType.borders.CopyTo(adjustedBorders, 0);
 
-                        // Ajuster les bordures en fonction de la rotation
                         if (NbrOfRotation != 0)
                         {
-                            if (neighborRotationY < 0)
-                            {
-                                adjustedBorders = RotateArrayLeft(adjustedBorders, NbrOfRotation);
-                            }
-                            else
-                            {
-                                adjustedBorders = RotateArrayRight(adjustedBorders, NbrOfRotation);
-                            }
+                            adjustedBorders = RotateArrayRight(adjustedBorders, NbrOfRotation);
                         }
 
-                        // Stocker le type de bordure ajustée
-                        int neighborBorderType = adjustedBorders[(i + 3) % 6];
+                        int neighborBorderType = adjustedBorders[(i + 3) % 6]; // important changer le - ici car pas pris en compte
                         borderArray[i] = neighborBorderType;
-
-                        // Afficher les informations de débogage
-                        Debug.Log($"Voisin collapsed à {neighborCoord} avec border[{(i + 3) % 6}] = {neighborBorderType}. Stockage en borderArray[{i}]");
-
-                        // Afficher l'état actuel de borderArray
-                        Debug.Log($"État actuel de borderArray après ajout : [{string.Join(", ", borderArray)}]");
                     }
-
-                }
-                else
-                {
-                    // Si le voisin est hors de la grille, considérer comme une bordure 0
-                    Debug.Log($"Aucun voisin à {baseHexCoord + directions[i]} - Considéré comme border 0");
-                }
-
-                // Attendre le délai spécifié avant de continuer à la prochaine itération
-                yield return new WaitForSeconds(checkDelay);
-            }
-
-            // Afficher les bordures stockées pour la tuile de base
-            Debug.Log($"borderArray pour {baseHexCoord}: [{string.Join(", ", borderArray)}]");
-
-            // Si la tuile de base a des voisins collapsed
-            if (hasCollapsedNeighbor)
-            {
-                int RotationToSpawn;
-                // Essayer de trouver une tuile qui correspond aux bordures connues avec toutes les rotations possibles
-                GameObject newTilePrefab = FindMatchingTilePrefabWithRotation(borderArray, out RotationToSpawn);
-                if (newTilePrefab != null)
-                {
-                    // Remplacer la tuile de base par la nouvelle tuile
-                    Destroy(targetTileTransform.gameObject); // Détruire la tuile existante
-                    Vector3 worldPosition = HexToWorldPosition(baseHexCoord); // Convertir la position hexagonale en position mondiale
-                    GameObject newTile = Instantiate(newTilePrefab, worldPosition, Quaternion.Euler(0, RotationToSpawn, 0), transform);
-                    BaseTile newBaseTile = newTile.GetComponent<BaseTile>();
-                    newBaseTile.Initialize(baseHexCoord, AllTilesGO); // Initialiser la nouvelle tuile
-
-                    // Créer un CeilClass pour stocker les informations de la tuile
-                    CeilClass ceilClass = new CeilClass(baseHexCoord);
-                    newBaseTile.ceilClass = ceilClass;
-
-                    // Marquer la nouvelle tuile comme collapsed
-                    newBaseTile.ceilClass.isCollapsed = true;
-
-                    // Ajouter la nouvelle tuile au dictionnaire de la grille hexagonale
-                    HexGridDictionary[baseHexCoord] = newTile; // Mettre à jour la grille hexagonale
-                    
-                    // Retirer la tuile de la liste des tuiles non collapsed
-                    if (HexGridCollapsedYet.Contains(baseHexCoord))
+                    else
                     {
-                        
-                        HexGridCollapsedYet.Remove(baseHexCoord);
+                        int[] adjustedBorders = new int[6];
+                        neighborTile.cellType.borders.CopyTo(adjustedBorders, 0);
+                        int neighborBorderType = adjustedBorders[(i + 3) % 6]; // important changer le - ici car pas pris en compte
+                        borderArray[i] = neighborBorderType;
+                        // Ajouter les tuiles non collapsées à TilesWhoNeedToGetCheck
+                        if (!TilesWhoNeedToGetCheck.Contains(neighborCoord) && !CheckedButNotCollapsedTiles.Contains(neighborCoord))
+                        {
+                            TilesWhoNeedToGetCheck.Add(neighborCoord);
+                            //Debug.Log($"Ajout de la tuile non collapsed {neighborCoord} à TilesWhoNeedToGetCheck");
+                        }
                     }
-
-                    Debug.Log($"Tuile à {baseHexCoord} remplacée par {newTilePrefab.name} et marquée comme collapsed.");
-
-                    // Attendre le délai spécifié avant de continuer à la prochaine tuile
-                    yield return new WaitForSeconds(checkDelay);
-                }
-                else
-                {
-                    // Si aucune tuile correspondante n'a été trouvée, afficher un avertissement
-                    Debug.LogWarning($"Aucune tuile correspondante trouvée pour {baseHexCoord} avec les bordures spécifiées : [{string.Join(", ", borderArray)}].");
                 }
             }
             else
             {
-                // Si aucune tuile voisine n'est collapsed, afficher un message
-                Debug.Log($"Aucune tuile collapsed voisine trouvée pour {baseHexCoord}.");
+                borderArray[i] = 0;
+            }
+
+            yield return new WaitForSeconds(checkDelay);
+        }
+
+        Debug.Log($"borderArray pour {baseHexCoord}: [{string.Join(", ", borderArray)}]");
+
+        if (collapseTile )/*&& hasCollapsedNeighbor)*/ // test2
+        {
+            int rotationToSpawn;
+            GameObject newTilePrefab = FindMatchingTilePrefabWithRotation(borderArray, out rotationToSpawn);
+            if (newTilePrefab != null)
+            {
+                Destroy(targetTileTransform.gameObject);
+                Vector3 worldPosition = HexToWorldPosition(baseHexCoord);
+                GameObject newTile = Instantiate(newTilePrefab, worldPosition, Quaternion.Euler(0, rotationToSpawn, 0), transform);
+                BaseTile newBaseTile = newTile.GetComponent<BaseTile>();
+                newBaseTile.Initialize(baseHexCoord, AllTilesGO);
+
+                CeilClass ceilClass = new CeilClass(baseHexCoord);
+                newBaseTile.ceilClass = ceilClass;
+                newBaseTile.ceilClass.isCollapsed = true;
+
+                HexGridDictionary[baseHexCoord] = newTile;
+                if (HexGridNotCollapsedYet.Contains(baseHexCoord))
+                {
+                    HexGridNotCollapsedYet.Remove(baseHexCoord);
+                }
+
+                // Réinitialiser la liste des tuiles vérifiées sans collapse
+                CheckedButNotCollapsedTiles.Clear();
+
+                Debug.Log($"Tuile à {baseHexCoord} remplacée par {newTilePrefab.name} et marquée comme collapsed.");
+
+                yield return new WaitForSeconds(checkDelay);
+
+                foreach (var dir in directions)
+                {
+                    Vector3 neighborCoord = baseHexCoord + dir;
+                    if (HexGridDictionary.ContainsKey(neighborCoord))
+                    {
+                        BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
+                        if (neighborTile != null && !neighborTile.ceilClass.isCollapsed && !TilesWhoNeedToGetCheck.Contains(neighborCoord))
+                        {
+                            TilesWhoNeedToGetCheck.Add(neighborCoord);
+                            Debug.Log($"Ajout de la tuile {neighborCoord} à TilesWhoNeedToGetCheck");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"Aucune tuile correspondante trouvée pour {baseHexCoord} avec les bordures spécifiées : [{string.Join(", ", borderArray)}].");
+                if (HexGridNotCollapsedYet.Contains(baseHexCoord))
+                {
+                    HexGridNotCollapsedYet.Remove(baseHexCoord);
+                    baseTile.ceilClass.isCollapsed = true;
+                }
+
+                // Réinitialiser la liste des tuiles vérifiées sans collapse
+                CheckedButNotCollapsedTiles.Clear();
+            }
+        }
+        else if (!collapseTile)
+        {
+            // Ajouter les coordonnées de la tuile à CheckedButNotCollapsedTiles si elle n'est pas collapse
+            if (!CheckedButNotCollapsedTiles.Contains(baseHexCoord))
+            {
+                CheckedButNotCollapsedTiles.Add(baseHexCoord);
+                Debug.Log($"Tuile {baseHexCoord} ajoutée à CheckedButNotCollapsedTiles");
             }
         }
     }
+}
+
+
+
+
+
 
     private GameObject FindMatchingTilePrefabWithRotation(int[] borderArray, out int customRotation)
     {
