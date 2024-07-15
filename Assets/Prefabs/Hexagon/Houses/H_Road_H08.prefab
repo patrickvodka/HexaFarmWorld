@@ -56075,6 +56075,7 @@ GameObject:
   - component: {fileID: 5674425878775767848}
   - component: {fileID: 1724602191116304460}
   - component: {fileID: 4585860364174365315}
+  - component: {fileID: -7758912193473939993}
   m_Layer: 0
   m_Name: H_Road_H08
   m_TagString: Untagged
@@ -56170,6 +56171,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4575734979276873811, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
+--- !u!114 &-7758912193473939993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8701935811992852301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9db6663a9e6e1a4cab681eee4335bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellType:
+    name: 
+    prefab: {fileID: 0}
+    tier: 0
+    borders: 010000000000000001000000000000000100000000000000
+  ceilClass:
+    hexCoord: {x: 0, y: 0, z: 0}
+    isCollapsed: 0
+    selectedPrefab: {fileID: 0}
 --- !u!1 &8705094087004985309
 GameObject:
   m_ObjectHideFlags: 0

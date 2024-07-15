@@ -21147,6 +21147,7 @@ GameObject:
   - component: {fileID: 3600948872010123779}
   - component: {fileID: 1798602687992087423}
   - component: {fileID: 7151805081774211182}
+  - component: {fileID: -8191980565519941301}
   m_Layer: 0
   m_Name: H_Road_H05
   m_TagString: Untagged
@@ -21242,6 +21243,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4575734979276873811, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
+--- !u!114 &-8191980565519941301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4279571813542505656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9db6663a9e6e1a4cab681eee4335bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellType:
+    name: 
+    prefab: {fileID: 0}
+    tier: 0
+    borders: 010000000000000000000000000000000100000001000000
+  ceilClass:
+    hexCoord: {x: 0, y: 0, z: 0}
+    isCollapsed: 0
+    selectedPrefab: {fileID: 0}
 --- !u!1 &4288142671402949659
 GameObject:
   m_ObjectHideFlags: 0
