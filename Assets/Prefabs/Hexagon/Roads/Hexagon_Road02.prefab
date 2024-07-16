@@ -124,12 +124,10 @@ MonoBehaviour:
     name: Road02
     prefab: {fileID: 4704433884554963502}
     tier: 0
-    borders: 000000000000000000000000000000000100000001000000
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
-    possibleTiles: []
     isCollapsed: 0
-    selectedTile: {fileID: 0}
+    selectedPrefab: {fileID: 0}
 --- !u!1 &5988049823116129461
 GameObject:
   m_ObjectHideFlags: 0

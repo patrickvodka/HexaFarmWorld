@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1f9f06fda9b974b9d5dc0ef2e39373, type: 3}
+  m_Name: RempartDoors
+  m_EditorClassIdentifier: 
+  ceil:
+  - {fileID: 4634264230318550623, guid: 48485755a72fcbb42bf43c012743fcf0, type: 3}
+  - {fileID: 4634264230318550623, guid: e7a06076ac6b4d04cb9ed3400631e5de, type: 3}
+  - {fileID: 4634264230318550623, guid: 9a7d5f494902da94d9fbcf00951fe454, type: 3}
+  - {fileID: 4634264230318550623, guid: 07d5bd67fc5701041b02597f114d3084, type: 3}
+  - {fileID: 4634264230318550623, guid: 2d9231ef9c5836a4596171ff990ec9d6, type: 3}
+  tileName: []

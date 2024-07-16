@@ -425,7 +425,7 @@ MonoBehaviour:
   checkDelay: 0
   allTilePrefabs: {fileID: 11400000, guid: 4e47442fdd3dbeb4a842fc6c1181cdf9, type: 2}
   AllTilesGO: []
-  radiusMap: 3
+  radiusMap: 4
   HexGridNotCollapsedYet: []
   TilesWhoNeedToGetCheck: []
 --- !u!1660057539 &9223372036854775807

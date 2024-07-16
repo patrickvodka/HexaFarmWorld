@@ -109,7 +109,6 @@ public class BorderCheckTester : MonoBehaviour
             }
         }
     }
-    
 
     private IEnumerator CheckBordersProcess()
     {
@@ -229,189 +228,140 @@ public class BorderCheckTester : MonoBehaviour
                         hasCollapsedNeighbor = true;
                         float neighborRotationY = neighborTile.transform.rotation.eulerAngles.y;
                         int NbrOfRotation = ((int)neighborRotationY / 60) % 6;
-                        int[] adjustedBorders = new int[6];
-                        neighborTile.cellType.borders.CopyTo(adjustedBorders, 0);
+                        List<int> neighborBordersList = neighborTile.cellType.borders[0];
+                        int[] neighborBordersArray = neighborBordersList.ToArray();
 
-                        if (NbrOfRotation != 0)
+                        // Ajuster les bordures en fonction de la rotation du voisin
+                        for (int j = 0; j < NbrOfRotation; j++)
                         {
-                            adjustedBorders = RotateArrayRight(adjustedBorders, NbrOfRotation);
+                            int temp = neighborBordersArray[5];
+                            for (int k = 5; k > 0; k--)
+                            {
+                                neighborBordersArray[k] = neighborBordersArray[k - 1];
+                            }
+                            neighborBordersArray[0] = temp;
                         }
 
-                        int neighborBorderType = adjustedBorders[(i + 3) % 6]; // important changer le - ici car pas pris en compte
-                        borderArray[i] = neighborBorderType;
-                    }
-                    else
-                    {
-                        int[] adjustedBorders = new int[6];
-                        neighborTile.cellType.borders.CopyTo(adjustedBorders, 0);
-                        int neighborBorderType = adjustedBorders[(i + 3) % 6]; // important changer le - ici car pas pris en compte
-                        borderArray[i] = neighborBorderType;
-                        // Ajouter les tuiles non collapsées à TilesWhoNeedToGetCheck
-                        if (!TilesWhoNeedToGetCheck.Contains(neighborCoord) && !CheckedButNotCollapsedTiles.Contains(neighborCoord))
-                        {
-                            TilesWhoNeedToGetCheck.Add(neighborCoord);
-                            //Debug.Log($"Ajout de la tuile non collapsed {neighborCoord} à TilesWhoNeedToGetCheck");
-                        }
+                        borderArray[i] = neighborBordersArray[(i + 3) % 6]; // Mettre à jour la bordure de base
                     }
                 }
             }
-            else
-            {
-                borderArray[i] = 0;
-            }
-
-            yield return new WaitForSeconds(checkDelay);
         }
 
-        Debug.Log($"borderArray pour {baseHexCoord}: [{string.Join(", ", borderArray)}]");
-
-        if (collapseTile )/*&& hasCollapsedNeighbor)*/ // test2
+        if (hasCollapsedNeighbor)
         {
-            int rotationToSpawn;
-            GameObject newTilePrefab = FindMatchingTilePrefabWithRotation(borderArray, out rotationToSpawn);
-            if (newTilePrefab != null)
+            List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = FindMatchingTilePrefabsWithRotation(borderArray);
+            if (matchingTilePrefabsWithRotation.Count > 0)
             {
+                (GameObject matchingTilePrefab, int rotation) = matchingTilePrefabsWithRotation[Random.Range(0, matchingTilePrefabsWithRotation.Count)];
+
+                Vector3 currentPos = targetTileTransform.position;
+                Quaternion rotationAngle = Quaternion.Euler(0, 60 * rotation, 0);
+
                 Destroy(targetTileTransform.gameObject);
-                Vector3 worldPosition = HexToWorldPosition(baseHexCoord);
-                GameObject newTile = Instantiate(newTilePrefab, worldPosition, Quaternion.Euler(0, rotationToSpawn, 0), transform);
+
+                GameObject newTile = Instantiate(matchingTilePrefab, currentPos, rotationAngle);
                 BaseTile newBaseTile = newTile.GetComponent<BaseTile>();
                 newBaseTile.Initialize(baseHexCoord, AllTilesGO);
-
-                CeilClass ceilClass = new CeilClass(baseHexCoord);
-                newBaseTile.ceilClass = ceilClass;
-                newBaseTile.ceilClass.isCollapsed = true;
+                newBaseTile.ceilClass.isCollapsed = collapseTile;
 
                 HexGridDictionary[baseHexCoord] = newTile;
-                if (HexGridNotCollapsedYet.Contains(baseHexCoord))
+
+                if (collapseTile)
                 {
                     HexGridNotCollapsedYet.Remove(baseHexCoord);
                 }
-
-                // Réinitialiser la liste des tuiles vérifiées sans collapse
-                CheckedButNotCollapsedTiles.Clear();
-
-                Debug.Log($"Tuile à {baseHexCoord} remplacée par {newTilePrefab.name} et marquée comme collapsed.");
-
-                yield return new WaitForSeconds(checkDelay);
-
-                foreach (var dir in directions)
+                else
                 {
-                    Vector3 neighborCoord = baseHexCoord + dir;
-                    if (HexGridDictionary.ContainsKey(neighborCoord))
+                    TilesWhoNeedToGetCheck.Add(baseHexCoord);
+                }
+
+                if (collapseTile)
+                {
+                    CheckedButNotCollapsedTiles.Remove(baseHexCoord);
+                    for (int i = 0; i < directions.Count; i++)
                     {
-                        BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
-                        if (neighborTile != null && !neighborTile.ceilClass.isCollapsed && !TilesWhoNeedToGetCheck.Contains(neighborCoord))
+                        Vector3 neighborCoord = baseHexCoord + directions[i];
+                        if (HexGridDictionary.ContainsKey(neighborCoord) && !HexGridDictionary[neighborCoord].GetComponent<BaseTile>().ceilClass.isCollapsed)
                         {
-                            TilesWhoNeedToGetCheck.Add(neighborCoord);
-                            Debug.Log($"Ajout de la tuile {neighborCoord} à TilesWhoNeedToGetCheck");
+                            if (!CheckedButNotCollapsedTiles.Contains(neighborCoord))
+                            {
+                                CheckedButNotCollapsedTiles.Add(neighborCoord);
+                                TilesWhoNeedToGetCheck.Add(neighborCoord);
+                            }
                         }
                     }
                 }
             }
             else
             {
-                Debug.LogWarning($"Aucune tuile correspondante trouvée pour {baseHexCoord} avec les bordures spécifiées : [{string.Join(", ", borderArray)}].");
-                if (HexGridNotCollapsedYet.Contains(baseHexCoord))
-                {
-                    HexGridNotCollapsedYet.Remove(baseHexCoord);
-                    baseTile.ceilClass.isCollapsed = true;
-                }
+                Debug.LogWarning($"Aucun prefab correspondant trouvé pour les bordures {string.Join(",", borderArray)}.");
+            }
+        }
 
-                // Réinitialiser la liste des tuiles vérifiées sans collapse
-                CheckedButNotCollapsedTiles.Clear();
-            }
-        }
-        else if (!collapseTile)
-        {
-            // Ajouter les coordonnées de la tuile à CheckedButNotCollapsedTiles si elle n'est pas collapse
-            if (!CheckedButNotCollapsedTiles.Contains(baseHexCoord))
-            {
-                CheckedButNotCollapsedTiles.Add(baseHexCoord);
-                Debug.Log($"Tuile {baseHexCoord} ajoutée à CheckedButNotCollapsedTiles");
-            }
-        }
+        yield return new WaitForSeconds(checkDelay);
     }
 }
 
 
 
-
-
-
-    private GameObject FindMatchingTilePrefabWithRotation(int[] borderArray, out int customRotation)
+    private List<(GameObject tilePrefab, int rotation)> FindMatchingTilePrefabsWithRotation(int[] borderArray)
     {
-        for (int rotation = 0; rotation < 6; rotation++)
+        List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = new List<(GameObject, int)>();
+
+        foreach (GameObject tilePrefab in AllTilesGO)
         {
-            int[] rotatedBorderArray = new int[6];
-            for (int i = 0; i < 6; i++)
+            CellType cellType = tilePrefab.GetComponent<CellType>();
+            if (cellType != null)
             {
-                rotatedBorderArray[i] = borderArray[(i + rotation) % 6];
-            }
-
-            Debug.Log($"Vérification avec rotation de {rotation * 60} degrés. BorderArray testé : [{string.Join(", ", rotatedBorderArray)}]");
-
-            foreach (GameObject tilePrefab in AllTilesGO)
-            {
-                BaseTile tile = tilePrefab.GetComponent<BaseTile>();
-                if (tile != null)
+                foreach (List<int> originalBorders in cellType.borders)
                 {
-                    int[] tileBorders = tile.cellType.borders;
-                    bool match = true;
-
-                    Debug.Log($"Comparaison pour {tilePrefab.name}. Bordures : [{string.Join(", ", tileBorders)}] avec [{string.Join(", ", rotatedBorderArray)}]");
-
-                    for (int i = 0; i < 6; i++)
+                    int[] originalBordersArray = originalBorders.ToArray(); // Convertir List<int> en int[]
+                    for (int rotation = 0; rotation < 6; rotation++)
                     {
-                        if (rotatedBorderArray[i] != tileBorders[i])
+                        int[] adjustedBorders = new int[6];
+                        originalBordersArray.CopyTo(adjustedBorders, 0);
+
+                        // Effectuer la rotation des bordures
+                        for (int j = 0; j < rotation; j++)
                         {
-                            match = false;
-                            break;
+                            int temp = adjustedBorders[5];
+                            for (int k = 5; k > 0; k--)
+                            {
+                                adjustedBorders[k] = adjustedBorders[k - 1];
+                            }
+                            adjustedBorders[0] = temp;
                         }
-                    }
 
-                    if (match)
-                    {
-                        Debug.Log($"Trouvé un prefab de tuile correspondant avec rotation {rotation * 60}° pour les bordures {string.Join(", ", borderArray)} : {tilePrefab.name}");
-                        customRotation = rotation * 60;
-                        return tilePrefab;
-                    }
-                    else
-                    {
-                        Debug.Log($"Non match pour {tilePrefab.name}. Bordures comparées : [{string.Join(", ", tileBorders)}] vs [{string.Join(", ", rotatedBorderArray)}]");
+                        // Vérifier si les bordures ajustées correspondent aux bordures données
+                        bool match = true;
+                        for (int i = 0; i < 6; i++)
+                        {
+                            if (borderArray[i] != 0 && borderArray[i] != adjustedBorders[i])
+                            {
+                                match = false;
+                                break;
+                            }
+                        }
+
+                        if (match)
+                        {
+                            matchingTilePrefabsWithRotation.Add((tilePrefab, rotation));
+                        }
                     }
                 }
             }
         }
-        customRotation = 0;
-        return null;
+
+        return matchingTilePrefabsWithRotation;
     }
 
-    public Vector3 HexToWorldPosition(Vector3 hexCoord)
+
+
+    private Vector3 HexToWorldPosition(Vector3 hexCoord)
     {
-        float x = width * (hexCoord.x + hexCoord.z / 2.0f);
-        float z = height * hexCoord.z;
+        float x = hexCoord.x * width + hexCoord.z * width / 2f;
+        float z = hexCoord.z * height * 0.75f;
         return new Vector3(x, 0, z);
-    }
-
-    private int[] RotateArrayRight(int[] array, int positions)
-    {
-        int length = array.Length;
-        int[] rotatedArray = new int[length];
-        for (int i = 0; i < length; i++)
-        {
-            rotatedArray[(i + positions) % length] = array[i];
-        }
-        return rotatedArray;
-    }
-
-    private int[] RotateArrayLeft(int[] array, int positions)
-    {
-        int length = array.Length;
-        int[] rotatedArray = new int[length];
-        for (int i = 0; i < length; i++)
-        {
-            rotatedArray[i] = array[(i + positions) % length];
-        }
-        return rotatedArray;
     }
 }

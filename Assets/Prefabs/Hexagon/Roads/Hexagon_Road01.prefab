@@ -121,15 +121,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cellType:
-    name: Road01
-    prefab: {fileID: 857079173555020526}
+    name: 
+    prefab: {fileID: 0}
     tier: 0
-    borders: 000000000000000000000000000000000100000000000000
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
-    possibleTiles: []
     isCollapsed: 0
-    selectedSoTile: {fileID: 11400000, guid: 0dee92681b174fb418abfff38762a7b1, type: 2}
+    selectedPrefab: {fileID: 0}
 --- !u!1 &6474406112711161208
 GameObject:
   m_ObjectHideFlags: 0
