@@ -38,7 +38,7 @@ public class BaseTileInspector : Editor
 
             EditorGUILayout.BeginVertical(GUI.skin.box); // Crée un conteneur avec une bordure
             EditorGUILayout.LabelField($"Border {i + 1}", EditorStyles.boldLabel, GUILayout.Width(100));
-
+            baseTile.ReturnInput();
             // Affichez chaque item de chaque border en horizontal
             EditorGUILayout.BeginHorizontal();
             for (int j = 0; j < baseTile.cellType.borders[i].Count; j++)
@@ -66,10 +66,16 @@ public class BaseTileInspector : Editor
             EditorGUILayout.EndVertical();
             EditorGUILayout.Space();
         }
+        if (GUILayout.Button("Validate and Save"))
+        {
+            baseTile.SaveInput();
+            
+        }
 
         // Marquez l'objet comme modifié pour que Unity enregistre les modifications
         if (GUI.changed)
         {
+            baseTile.SaveInput();
             EditorUtility.SetDirty(target);
         }
     }

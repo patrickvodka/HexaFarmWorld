@@ -14,12 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ceil:
   - {fileID: 11400000, guid: 0dee92681b174fb418abfff38762a7b1, type: 2}
-  - {fileID: 11400000, guid: bce2e46d2a12ba34a8987dae6778c045, type: 2}
-  - {fileID: 11400000, guid: 34a53c42d6779d549b65352aaf82c2d5, type: 2}
-  - {fileID: 11400000, guid: 439add34b473d2748b7ceb4d7fac8c8b, type: 2}
-  - {fileID: 11400000, guid: 169bd4f52cdf7a949b99fcc29834329c, type: 2}
   - {fileID: 11400000, guid: c335dcb5d07877342a308b5d02b5fb50, type: 2}
-  - {fileID: 11400000, guid: 42ecc04bf2aea6b48ba53ba3110f32f6, type: 2}
   tileSetName:
   - Road
   - Rempart

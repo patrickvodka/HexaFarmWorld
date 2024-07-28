@@ -797,9 +797,13 @@ MonoBehaviour:
     name: Road13
     prefab: {fileID: 0}
     tier: 0
-    borders: 010000000100000001000000010000000100000001000000
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
-    possibleTiles: []
     isCollapsed: 0
-    selectedSoTile: {fileID: 11400000, guid: 0dee92681b174fb418abfff38762a7b1, type: 2}
+    selectedPrefab: {fileID: 0}
+  Border_1: 01000000
+  Border_2: 01000000
+  Border_3: 01000000
+  Border_4: 01000000
+  Border_5: 01000000
+  Border_6: 01000000

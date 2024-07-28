@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 public class BorderCheckTester : MonoBehaviour
 {
@@ -16,7 +16,7 @@ public class BorderCheckTester : MonoBehaviour
     // Dictionnaire pour stocker les tuiles sur la grille hexagonale
     public Dictionary<Vector3, GameObject> HexGridDictionary = new Dictionary<Vector3, GameObject>();
     // Liste pour savoir si toutes les nodes ont été collapsées
-    [FormerlySerializedAs("HexGridCollapsedYet")] public List<Vector3> HexGridNotCollapsedYet = new List<Vector3>();
+    public List<Vector3> HexGridNotCollapsedYet = new List<Vector3>();
     // Liste des tuiles qui doivent être vérifiées mais ne doivent pas être marquées comme collapsed
     public List<Vector3> TilesWhoNeedToGetCheck = new List<Vector3>();
     private List<Vector3> CheckedButNotCollapsedTiles = new List<Vector3>();
@@ -76,10 +76,10 @@ public class BorderCheckTester : MonoBehaviour
                         }
 
                         GameObject randomTilePrefab = possibleTilePrefabs[Random.Range(0, possibleTilePrefabs.Count)];
-                        Debug.Log($"Génération de la tuile {randomTilePrefab.name} à la position {hexCoord}.");
+                        //Debug.Log($"Génération de la tuile {randomTilePrefab.name} à la position {hexCoord}.");
                         GameObject currentTile = Instantiate(randomTilePrefab, worldPosition, Quaternion.identity, transform);
                         BaseTile baseTile = currentTile.GetComponent<BaseTile>();
-                        baseTile.Initialize(hexCoord, AllTilesGO);
+                        baseTile.Initialize(hexCoord);
 
                         CeilClass ceilClass = new CeilClass(hexCoord);
                         baseTile.ceilClass = ceilClass;
@@ -113,12 +113,12 @@ public class BorderCheckTester : MonoBehaviour
     private IEnumerator CheckBordersProcess()
     {
         // Initial collapse check for the starting tile
-        if (HexGridNotCollapsedYet.Count > 0)
+        /*if (HexGridNotCollapsedYet.Count > 0)
         {
             GameObject initialTile = HexGridDictionary[new Vector3(0, 0, 0)];
             Debug.Log($"Lancement du check des bordures pour {initialTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
             yield return StartCoroutine(CheckBordersWithDelay(initialTile.transform, true));
-        }
+        }*/
 
         // Process subsequent border checks
         while (HexGridNotCollapsedYet.Count > 0 || TilesWhoNeedToGetCheck.Count > 0)
@@ -200,17 +200,16 @@ public class BorderCheckTester : MonoBehaviour
         return bestTile;
     }
 
-   private IEnumerator CheckBordersWithDelay(Transform targetTileTransform, bool collapseTile)
+    private IEnumerator CheckBordersWithDelay(Transform targetTileTransform, bool collapseTile)
 {
+    
+        Debug.LogError("collapsed : " + collapseTile);
+    
     BaseTile baseTile = targetTileTransform.GetComponent<BaseTile>();
     if (baseTile != null)
     {
         Vector3 baseHexCoord = baseTile.ceilClass.hexCoord;
-        int[] borderArray = new int[6];
-        for (int i = 0; i < 6; i++)
-        {
-            borderArray[i] = 0; // Initialiser les bordures à 0
-        }
+        List<int> borderArray = new List<int> { 0, 0, 0, 0, 0, 0 };
 
         bool hasCollapsedNeighbor = false;
 
@@ -229,20 +228,29 @@ public class BorderCheckTester : MonoBehaviour
                         float neighborRotationY = neighborTile.transform.rotation.eulerAngles.y;
                         int NbrOfRotation = ((int)neighborRotationY / 60) % 6;
                         List<int> neighborBordersList = neighborTile.cellType.borders[0];
-                        int[] neighborBordersArray = neighborBordersList.ToArray();
-
-                        // Ajuster les bordures en fonction de la rotation du voisin
-                        for (int j = 0; j < NbrOfRotation; j++)
+                        if (neighborBordersList.Count == 6)
                         {
-                            int temp = neighborBordersArray[5];
-                            for (int k = 5; k > 0; k--)
-                            {
-                                neighborBordersArray[k] = neighborBordersArray[k - 1];
-                            }
-                            neighborBordersArray[0] = temp;
-                        }
+                            int[] neighborBordersArray = neighborBordersList.ToArray();
 
-                        borderArray[i] = neighborBordersArray[(i + 3) % 6]; // Mettre à jour la bordure de base
+                            // Ajuster les bordures en fonction de la rotation du voisin
+                            for (int j = 0; j < NbrOfRotation; j++)
+                            {
+                                int temp = neighborBordersArray[5];
+                                for (int k = 5; k > 0; k--)
+                                {
+                                    neighborBordersArray[k] = neighborBordersArray[k - 1];
+                                }
+                                neighborBordersArray[0] = temp;
+                            }
+
+                            // Debug log pour vérifier la valeur avant l'accès
+                            Debug.Log($"Checking border at index {i} with value {neighborBordersArray[(i + 3) % 6]}.");
+                            borderArray[i] = neighborBordersArray[(i + 3) % 6]; // Mettre à jour la bordure de base
+                        }
+                        else
+                        {
+                            Debug.LogWarning($"Le tableau des bordures du voisin à la coordonnée {neighborCoord} n'a pas 6 éléments.");
+                        }
                     }
                 }
             }
@@ -262,7 +270,7 @@ public class BorderCheckTester : MonoBehaviour
 
                 GameObject newTile = Instantiate(matchingTilePrefab, currentPos, rotationAngle);
                 BaseTile newBaseTile = newTile.GetComponent<BaseTile>();
-                newBaseTile.Initialize(baseHexCoord, AllTilesGO);
+                newBaseTile.Initialize(baseHexCoord);
                 newBaseTile.ceilClass.isCollapsed = collapseTile;
 
                 HexGridDictionary[baseHexCoord] = newTile;
@@ -305,13 +313,17 @@ public class BorderCheckTester : MonoBehaviour
 
 
 
-    private List<(GameObject tilePrefab, int rotation)> FindMatchingTilePrefabsWithRotation(int[] borderArray)
+   private List<(GameObject tilePrefab, int rotation)> FindMatchingTilePrefabsWithRotation(List<int> borderArray)
+{
+    List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = new List<(GameObject, int)>();
+    
+    foreach (var tilePrefab in AllTilesGO)
     {
-        List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = new List<(GameObject, int)>();
-
-        foreach (GameObject tilePrefab in AllTilesGO)
+        // On obtient le CellType à partir du prefab
+        BaseTile baseTile = tilePrefab.GetComponent<BaseTile>();
+        if (baseTile != null)
         {
-            CellType cellType = tilePrefab.GetComponent<CellType>();
+            CellType cellType = baseTile.cellType;
             if (cellType != null)
             {
                 foreach (List<int> originalBorders in cellType.borders)
@@ -351,11 +363,19 @@ public class BorderCheckTester : MonoBehaviour
                     }
                 }
             }
+            else
+            {
+                Debug.LogWarning($"CellType manquant sur le prefab {tilePrefab.name}");
+            }
         }
-
-        return matchingTilePrefabsWithRotation;
+        else
+        {
+            Debug.LogWarning($"BaseTile manquant sur le prefab {tilePrefab.name}");
+        }
     }
 
+    return matchingTilePrefabsWithRotation;
+}
 
 
     private Vector3 HexToWorldPosition(Vector3 hexCoord)

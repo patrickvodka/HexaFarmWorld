@@ -128,6 +128,12 @@ MonoBehaviour:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
     selectedPrefab: {fileID: 0}
+  Border_1: 0000000004000000
+  Border_2: 0000000004000000
+  Border_3: 0000000004000000
+  Border_4: 0000000004000000
+  Border_5: 01000000
+  Border_6: 01000000
 --- !u!1 &5988049823116129461
 GameObject:
   m_ObjectHideFlags: 0

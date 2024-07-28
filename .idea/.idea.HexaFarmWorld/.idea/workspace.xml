@@ -7,27 +7,34 @@
     <list default="true" id="4020bd07-aee0-4976-81a3-da3042cde745" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Editor/BaseTileInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/BaseTileInspector.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Materials/_Debug/M_Water.mat" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Materials/_Debug/M_Water.mat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Ramparts/Hexagon_RampartGate.prefab" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Ramparts/Hexagon_RampartGate.prefab.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Ramparts/Hexagon_Rampart_120.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Ramparts/Hexagon_Rampart_120.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road01.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road01.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road02.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road02.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road03.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road03.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road04.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road04.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road05.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road05.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road06.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road06.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road07.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road07.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road08.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road08.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road09.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road09.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road10.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road10.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road11.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road11.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road12.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road12.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road13.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Roads/Hexagon_Road13.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/HExa_Water.prefab" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/HExa_Water.prefab.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/H_Bridge.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/H_Bridge.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/H_Water.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/H_Water.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/test.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/test.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/H_Water.prefab.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Water/H_Water.prefab.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/test.unity" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/test.unity.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/AllTiles.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObject/AllTiles.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Rempart.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Rempart.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Road.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Road.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Water.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Water.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BaseTile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BaseTile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/BorderCheckTester.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BorderCheckTester.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CellType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CellType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridScriptManual.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridScriptManual.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Spawner.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Spawner.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/churchFBxExport.unitypackage.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/CurrentMaximizeLayout.dwlt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonct.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonct.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/EditorUserSettings.asset" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -37,6 +44,10 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Editor/GridWaveFonctListEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -111,7 +122,17 @@
       <option name="presentableId" value="Default" />
       <updated>1721038404516</updated>
       <workItem from="1721038427829" duration="8776000" />
-      <workItem from="1721120139583" duration="12242000" />
+      <workItem from="1721120139583" duration="12681000" />
+      <workItem from="1721206693840" duration="16585000" />
+      <workItem from="1721381705465" duration="5970000" />
+      <workItem from="1721464178246" duration="11704000" />
+      <workItem from="1721645256323" duration="8056000" />
+      <workItem from="1721728908086" duration="13372000" />
+      <workItem from="1721812169383" duration="7587000" />
+      <workItem from="1721838533860" duration="1187000" />
+      <workItem from="1721899753201" duration="623000" />
+      <workItem from="1722076748780" duration="7434000" />
+      <workItem from="1722165735741" duration="6322000" />
     </task>
     <servers />
   </component>

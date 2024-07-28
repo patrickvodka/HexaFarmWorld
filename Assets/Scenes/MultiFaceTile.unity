@@ -419,13 +419,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 737584281}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6ff337f94e0f8f545b3f984f5ea81a78, type: 3}
+  m_Script: {fileID: 11500000, guid: 99d288c60275c5a40b52426df2ba5e72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  checkDelay: 0
+  checkDelay: 1
   allTilePrefabs: {fileID: 11400000, guid: 4e47442fdd3dbeb4a842fc6c1181cdf9, type: 2}
   AllTilesGO: []
-  radiusMap: 4
+  radiusMap: 3
   HexGridNotCollapsedYet: []
   TilesWhoNeedToGetCheck: []
 --- !u!1660057539 &9223372036854775807

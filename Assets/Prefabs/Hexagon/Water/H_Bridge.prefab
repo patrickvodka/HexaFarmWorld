@@ -384,11 +384,16 @@ MonoBehaviour:
     name: 
     prefab: {fileID: 0}
     tier: 0
-    borders: 040000000400000001000000040000000400000001000000
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
     selectedPrefab: {fileID: 0}
+  Border_1: 0400000000000000
+  Border_2: 0400000000000000
+  Border_3: 01000000
+  Border_4: 0400000000000000
+  Border_5: 0400000000000000
+  Border_6: 01000000
 --- !u!33 &4720613054333333210
 MeshFilter:
   m_ObjectHideFlags: 0
