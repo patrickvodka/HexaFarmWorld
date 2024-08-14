@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
+using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
 public class GridWaveFonctList : MonoBehaviour
@@ -15,6 +17,7 @@ public class GridWaveFonctList : MonoBehaviour
     private float width = 34.5f;
     public int radiusMap; // Radius of the hexagonal map
 
+    public Vector3 transCube;
     // Dictionary to store tiles on the hexagonal grid
     public Dictionary<Vector3, GameObject> HexGridDictionary = new Dictionary<Vector3, GameObject>();
     // List to track uncollapsed nodes
@@ -48,9 +51,19 @@ public class GridWaveFonctList : MonoBehaviour
 
         // Generate map tiles at startup
         GenerateRandomTileMap();
-
+        
         // Start border check process
         StartCoroutine(CheckBordersProcess());
+    }
+
+    private void FixedUpdate()
+    {
+        
+        if (transCube != new Vector3(0,0,0))
+        {
+            Debug.Log("after" + HexGridDictionary[transCube].transform);
+           StartCoroutine(CheckBordersWithDelay(HexGridDictionary[transCube].transform, true));
+        }
     }
 
     private void GenerateRandomTileMap()
@@ -82,9 +95,12 @@ public class GridWaveFonctList : MonoBehaviour
 
                         GameObject randomTilePrefab = possibleTilePrefabs[Random.Range(0, possibleTilePrefabs.Count)];
                         GameObject currentTile = Instantiate(randomTilePrefab, worldPosition, Quaternion.identity, transform);
-                        BaseTile baseTile = currentTile.GetComponent<BaseTile>();
-                        baseTile.Initialize(hexCoord);
-                        baseTile.ReturnInput();
+                        BaseTile baseTile = currentTile?.GetComponent<BaseTile>();
+                        if (baseTile != null)
+                        {
+                            baseTile.Initialize(hexCoord);
+                            baseTile.ReturnInput();
+                        }
                         CeilClass ceilClass = new CeilClass(hexCoord);
                         baseTile.ceilClass = ceilClass;
 
@@ -101,11 +117,12 @@ public class GridWaveFonctList : MonoBehaviour
         // Ensure tile (0, 0, 0) is correctly marked as collapsed
         if (HexGridDictionary.ContainsKey(new Vector3(0, 0, 0)))
         {
-            BaseTile centerTile = HexGridDictionary[new Vector3(0, 0, 0)].GetComponent<BaseTile>();
+            BaseTile centerTile = HexGridDictionary[new Vector3(0, 0, 0)]?.GetComponent<BaseTile>();
             if (centerTile != null)
             {
                 centerTile.ceilClass.isCollapsed = true;
                 HexGridNotCollapsedYet.Remove(new Vector3(0, 0, 0));
+                
             }
             else
             {
@@ -115,14 +132,7 @@ public class GridWaveFonctList : MonoBehaviour
     }
 
     private IEnumerator CheckBordersProcess()
-    {/*
-        // Initial collapse check for the starting tile
-        if (HexGridNotCollapsedYet.Count > 0)
-        {
-            GameObject initialTile = HexGridDictionary[new Vector3(0, 0, 0)];
-            Debug.Log($"Starting border check for {initialTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
-            yield return StartCoroutine(CheckBordersWithDelay(initialTile.transform, true));
-        }*/
+    {
 
         // Process subsequent border checks
         while (HexGridNotCollapsedYet.Count > 0 || TilesWhoNeedToGetCheck.Count > 0)
@@ -143,11 +153,12 @@ public class GridWaveFonctList : MonoBehaviour
             }
             else
             {
+               // CheckedButNotCollapsedTiles.Clear();// clear pour une nouvelle fois une fonction collapse
                 // Find next tile for a collapse check
                 GameObject bestTile = FindTileWithMostCollapsedNeighbors();
                 if (bestTile != null)
                 {
-                    Debug.Log($"Starting border callapsed check for {bestTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
+                    Debug.Log($"Starting border cllapsed check for {bestTile.GetComponent<BaseTile>().ceilClass.hexCoord}");
                     yield return StartCoroutine(CheckBordersWithDelay(bestTile.transform, true));
                 }
                 else
@@ -170,7 +181,7 @@ public class GridWaveFonctList : MonoBehaviour
         {
             if (HexGridDictionary.TryGetValue(hexCoord, out GameObject tileObject))
             {
-                BaseTile baseTile = tileObject.GetComponent<BaseTile>();
+                BaseTile baseTile = tileObject?.GetComponent<BaseTile>();
 
                 if (baseTile != null)
                 {
@@ -182,7 +193,7 @@ public class GridWaveFonctList : MonoBehaviour
                         Vector3 neighborCoord = hexCoord + directions[i];
                         if (HexGridDictionary.ContainsKey(neighborCoord))
                         {
-                            BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
+                            BaseTile neighborTile = HexGridDictionary[neighborCoord]?.GetComponent<BaseTile>();
                             if (neighborTile.ceilClass.isCollapsed)
                             {
                                 collapsedNeighbors++;
@@ -257,39 +268,46 @@ public class GridWaveFonctList : MonoBehaviour
                 }
             }
 
-        if (hasCollapsedNeighbor)
-        {
+        
             List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = FindMatchingTilePrefabsWithRotation(borderList);
             if (matchingTilePrefabsWithRotation.Count > 0)
             {
                 (GameObject bestMatchingTilePrefab, int bestRotation) = SelectBestMatchingTile(matchingTilePrefabsWithRotation, borderList);
-                GameObject newTile = Instantiate(bestMatchingTilePrefab, targetTileTransform.position, Quaternion.Euler(0, bestRotation * 60, 0), transform);
-                BaseTile newBaseTile = newTile?.GetComponent<BaseTile>();
-                if (newBaseTile != null)
+                if (bestMatchingTilePrefab != null)
                 {
-                    newBaseTile.Initialize(baseHexCoord);
-                    newBaseTile.ReturnInput();
-                }
-                baseTile.ceilClass.isCollapsed = collapseTile;
-                if (collapseTile)
-                {
-                    HexGridNotCollapsedYet.Remove(baseHexCoord);
-                }
-                else
-                {
-                    CheckedButNotCollapsedTiles.Add(baseHexCoord);
-                }
+                    GameObject newTile = Instantiate(bestMatchingTilePrefab, targetTileTransform.position,
+                        Quaternion.Euler(0, bestRotation * 60, 0), transform);
 
-                Destroy(targetTileTransform.gameObject);
+                    BaseTile newBaseTile = newTile?.GetComponent<BaseTile>();
+                    if (newBaseTile != null)
+                    {
+                        newBaseTile.Initialize(baseHexCoord);
+                        newBaseTile.ReturnInput();
+                    }
 
-                HexGridDictionary[baseHexCoord] = newTile;
+                    baseTile.ceilClass.isCollapsed = collapseTile;
+                    if (collapseTile)
+                    {
+                        HexGridNotCollapsedYet.Remove(baseHexCoord);
+                        
+                    }
+                    else
+                    {
+                       
+                        CheckedButNotCollapsedTiles.Add(baseHexCoord);
+                    }
+
+                    Destroy(targetTileTransform.gameObject);
+
+                    HexGridDictionary[baseHexCoord] = newTile;
+                }
 
                 for (int i = 0; i < directions.Count; i++)
                 {
                     Vector3 neighborCoord = baseHexCoord + directions[i];
                     if (HexGridDictionary.ContainsKey(neighborCoord))
                     {
-                        BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
+                        BaseTile neighborTile = HexGridDictionary[neighborCoord]?.GetComponent<BaseTile>();
                         if (neighborTile != null && !neighborTile.ceilClass.isCollapsed && !TilesWhoNeedToGetCheck.Contains(neighborCoord) && !CheckedButNotCollapsedTiles.Contains(neighborCoord))
                         {
                             TilesWhoNeedToGetCheck.Add(neighborCoord);
@@ -301,10 +319,14 @@ public class GridWaveFonctList : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("No matching tiles found.");
+                Debug.LogError("No matching tiles found ! ");
+                 string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
+                Debug.LogError($"bordures pour la liste {concatenatedBorders}.");
+                
+               // baseTile.ceilClass.isCollapsed = collapseTile;
             }
         }
-    }
+    
 }
 
 
@@ -320,52 +342,63 @@ public class GridWaveFonctList : MonoBehaviour
         {
             foreach (var border in SearchingList)
             {
-                //Debug.LogWarning("les bordures : " + border);
                 int[] borderArray = new int[6];
                 borderArray = border.ToArray();
-
+              //  Debug.LogWarning(string.Join(",", borderArray));
                 for (int rotation = 0; rotation < 6; rotation++)
                 {
                     BigInteger hash = GetBorderHash(borderArray);
                     if (hashToTileMap.TryGetValue(hash, out List<(GameObject, int)> matchingTilePrefabs))
-                    {
+                    {/*
+                        foreach (var varPrefab in matchingTilePrefabs)
+                        {
+                            Debug.LogWarning(varPrefab.Item1 + "rota : "+ varPrefab.Item2);
+                        }*/
                         matchingTiles.AddRange(matchingTilePrefabs);
                     }
 
-                    // Rotate the border array for the next rotation
+                    
                     borderArray = RotateBorderArray(borderArray, 1);
+                }
+            }
+        }else{Debug.LogError("vide liste");}
+
+        return matchingTiles;
+    }
+
+    private (GameObject, int) SelectBestMatchingTile(List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation, List<List<int>> borderList)
+    {
+        if (matchingTilePrefabsWithRotation.Count > 0)
+        {
+            foreach (var (tilePrefab, rotation) in matchingTilePrefabsWithRotation)
+            {
+                BaseTile baseTile = tilePrefab.GetComponent<BaseTile>();
+                if (baseTile != null)
+                {
+                    List<List<int>> tileBorders = baseTile.cellType.borders.ToList();
+                    bool isMatch = true;
+                    for (int i = 0; i < directions.Count; i++)
+                    {
+                        int borderIndex = (i + rotation) % 6;
+                        if (!tileBorders[borderIndex].SequenceEqual(borderList[i]))
+                        {
+                            
+                            isMatch = false;
+                            break;
+                        }
+                    }
+
+                    if (isMatch)
+                    {
+                        return (tilePrefab, rotation);
+                    }
                 }
             }
         }
 
-        return matchingTiles;
-    }
-    private (GameObject, int) SelectBestMatchingTile(List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation, List<List<int>> borderList)
-    {
-        foreach (var (tilePrefab, rotation) in matchingTilePrefabsWithRotation)
-        {
-            BaseTile baseTile = tilePrefab.GetComponent<BaseTile>();
-            if (baseTile != null)
-            {
-                List<List<int>> tileBorders = baseTile.cellType.borders.ToList();
-                bool isMatch = true;
-                for (int i = 0; i < directions.Count; i++)
-                {
-                    int borderIndex = (i + rotation) % 6;
-                    if (!tileBorders[borderIndex].SequenceEqual(borderList[i]))
-                    {
-                        isMatch = false;
-                        break;
-                    }
-                }
-                if (isMatch)
-                {
-                    return (tilePrefab, rotation);
-                }
-            }
-        }
         // Default return if no exact match is found
-        return matchingTilePrefabsWithRotation[0];
+        return(null,0); //matchingTilePrefabsWithRotation[0];
+
     }
 
     private void PrecomputeTileHashes()
@@ -419,7 +452,12 @@ public class GridWaveFonctList : MonoBehaviour
                                 {
                                     if( check.Item1 == tilePrefab && check.Item2 == rotation)
                                     {
+                                        Debug.LogError($"{check.Item1}_{check.Item2} est ! :  {tilePrefab}_{rotation}");
                                         isInList = true;
+                                    }
+                                    else
+                                    {
+                                        Debug.LogError($"{check.Item1}_{check.Item2} n'est pas {tilePrefab}_{rotation}");
                                     }
                                 }
 
@@ -455,7 +493,7 @@ public class GridWaveFonctList : MonoBehaviour
         return rotatedBorders;
     }
 
-    private BigInteger GetBorderHash(int[] borders)
+    public BigInteger GetBorderHash(int[] borders)
     {
         BigInteger hash = 17;
         foreach (int border in borders)
@@ -463,6 +501,20 @@ public class GridWaveFonctList : MonoBehaviour
             hash = hash * 31 + border;
         }
         return hash;
+    }
+    
+    public  int[] ReverseHash(BigInteger hash, int length)
+    {
+        int[] borders = new int[length];
+        BigInteger tempHash = hash;
+
+        for (int i = length - 1; i >= 0; i--)
+        {
+            borders[i] = (int)(tempHash % 31);
+            tempHash = (tempHash - borders[i]) / 31;
+        }
+
+        return borders;
     }
 
     private Vector3 HexToWorldPosition(Vector3 hexCoord)
