@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="4020bd07-aee0-4976-81a3-da3042cde745" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Editor/GridWaveFonctListEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/GridWaveFonctListEditor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Hexagon_Grass.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Hexagon_Grass.prefab" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MultiFaceTile.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MultiFaceTile.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Water.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Water.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

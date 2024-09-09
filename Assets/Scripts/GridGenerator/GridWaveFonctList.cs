@@ -24,7 +24,7 @@ public class GridWaveFonctList : MonoBehaviour
     public List<Vector3> HexGridNotCollapsedYet = new List<Vector3>();
     // List of tiles that need checking but shouldn't be marked as collapsed
     public List<Vector3> TilesWhoNeedToGetCheck = new List<Vector3>();
-    private List<Vector3> CheckedButNotCollapsedTiles = new List<Vector3>();
+    public List<Vector3> CheckedButNotCollapsedTiles = new List<Vector3>();
     public Dictionary<BigInteger, List<(GameObject tilePrefab, int rotation)>> hashToTileMap = new Dictionary<BigInteger, List<(GameObject, int)>>(); // Dictionary for hashes
 
     // List of hexagonal directions (neighbors)
@@ -272,6 +272,7 @@ public class GridWaveFonctList : MonoBehaviour
             List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = FindMatchingTilePrefabsWithRotation(borderList);
             if (matchingTilePrefabsWithRotation.Count > 0)
             {
+                Debug.LogWarning("nombre de tile matché : " + matchingTilePrefabsWithRotation.Count);
                 (GameObject bestMatchingTilePrefab, int bestRotation) = SelectBestMatchingTile(matchingTilePrefabsWithRotation, borderList);
                 if (bestMatchingTilePrefab != null)
                 {
@@ -300,6 +301,10 @@ public class GridWaveFonctList : MonoBehaviour
                     Destroy(targetTileTransform.gameObject);
 
                     HexGridDictionary[baseHexCoord] = newTile;
+                }
+                else
+                {
+                    Debug.LogWarning("nt right matching tile found");
                 }
 
                 for (int i = 0; i < directions.Count; i++)
@@ -333,8 +338,8 @@ public class GridWaveFonctList : MonoBehaviour
 
     private List<(GameObject tilePrefab, int rotation)> FindMatchingTilePrefabsWithRotation(List<List<int>> borderList)
     {
-       // string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
-        //Debug.LogWarning($"bordures pour la liste {concatenatedBorders}."); //Base debug for list 
+        string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
+        Debug.LogWarning($"bordures pour la liste {concatenatedBorders}."); //Base debug for list 
         
         List<(GameObject tilePrefab, int rotation)> matchingTiles = new List<(GameObject, int)>();
         List<List<int>> SearchingList = ScriptHelper.GenerateConfigurations(borderList);
@@ -376,13 +381,19 @@ public class GridWaveFonctList : MonoBehaviour
                 if (baseTile != null)
                 {
                     List<List<int>> tileBorders = baseTile.cellType.borders.ToList();
+                    // Rotate tileBorders according to the current rotation
+                    tileBorders = RotateBordersList(tileBorders, rotation);
+                    // Debug: Log borders of the tile and borderList for comparison
+                    Debug.Log($"Checking tile: {tilePrefab.name}, Rotation: {rotation}");
+                    Debug.Log($"Tile Borders: {string.Join(", ", tileBorders.Select(b => string.Join("-", b)))}");
+                    Debug.Log($"Target Borders: {string.Join(", ", borderList.Select(b => string.Join("-", b)))}");
                     bool isMatch = true;
                     for (int i = 0; i < directions.Count; i++)
                     {
                         int borderIndex = (i + rotation) % 6;
-                        if (!tileBorders[borderIndex].SequenceEqual(borderList[i]))
+                        if (!tileBorders[borderIndex].Intersect(borderList[i]).Any() && !tileBorders[borderIndex].SequenceEqual(borderList[i]))
                         {
-                            
+                            Debug.Log($"Tile Borders Dir: {string.Join(", ", tileBorders.Select(b => string.Join("-", b)))}");
                             isMatch = false;
                             break;
                         }
@@ -390,6 +401,7 @@ public class GridWaveFonctList : MonoBehaviour
 
                     if (isMatch)
                     {
+                        Debug.LogWarning("Matched");
                         return (tilePrefab, rotation);
                     }
                 }
@@ -488,6 +500,19 @@ public class GridWaveFonctList : MonoBehaviour
         {
             int newIndex = (i + rotations) % length;
             rotatedBorders[newIndex] = borderArray[i];
+        }
+
+        return rotatedBorders;
+    }
+    private List<List<int>> RotateBordersList(List<List<int>> borders, int rotation)
+    {
+        int length = borders.Count;
+        List<List<int>> rotatedBorders = new List<List<int>>(new List<int>[length]);
+
+        for (int i = 0; i < length; i++)
+        {
+            int newIndex = (i + rotation) % length;
+            rotatedBorders[newIndex] = borders[i];
         }
 
         return rotatedBorders;
