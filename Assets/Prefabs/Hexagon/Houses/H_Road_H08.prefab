@@ -56187,11 +56187,16 @@ MonoBehaviour:
     name: 
     prefab: {fileID: 0}
     tier: 0
-    borders: 010000000000000001000000000000000100000000000000
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
     selectedPrefab: {fileID: 0}
+  Border_1: 01000000
+  Border_2: 0000000004000000
+  Border_3: 01000000
+  Border_4: 0000000004000000
+  Border_5: 01000000
+  Border_6: 0000000004000000
 --- !u!1 &8705094087004985309
 GameObject:
   m_ObjectHideFlags: 0

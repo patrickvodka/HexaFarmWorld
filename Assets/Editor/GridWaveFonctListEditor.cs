@@ -3,15 +3,15 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Numerics;
 
-[CustomEditor(typeof(GridWaveFonctList))]
+[CustomEditor(typeof(HexaWaveFonctCollapse))]
 public class GridWaveFonctListEditor : Editor
 {
-    private GridWaveFonctList _gridWaveFonctList;
+    private HexaWaveFonctCollapse _hexaWaveFonctCollapse;
     private int[] borders = new int[6];
     private bool _showDebug = false;
     private void OnEnable()
     {
-        _gridWaveFonctList = (GridWaveFonctList)target;
+        _hexaWaveFonctCollapse = (HexaWaveFonctCollapse)target;
     }
 
     public override void OnInspectorGUI()
@@ -74,7 +74,7 @@ public class GridWaveFonctListEditor : Editor
             if (GUILayout.Button("Afficher Dictionnaire précis de Hashes"))
             {
 
-                BigInteger test = _gridWaveFonctList.GetBorderHash(this.borders);
+                BigInteger test = _hexaWaveFonctCollapse.GetBorderHash(this.borders);
                 ShowLastHashes(test);
                 //int[] borders = _gridWaveFonctList.ReverseHash(test, 6);
                 //Debug.LogError($"Les bordures retrouvées sont : {string.Join(", ", borders)}");
@@ -88,7 +88,7 @@ public class GridWaveFonctListEditor : Editor
    
     private void ShowLastHashes(BigInteger currentHash)
     {
-        var tileHashes = _gridWaveFonctList.hashToTileMap;
+        var tileHashes = _hexaWaveFonctCollapse.hashToTileMap;
         List<(GameObject, int)> checkList = new List<(GameObject, int)>();
         if (tileHashes.TryGetValue(currentHash, out checkList))
         {
@@ -118,7 +118,7 @@ public class GridWaveFonctListEditor : Editor
 
     private void ShowTileHashes()
     {
-        var tileHashes = _gridWaveFonctList.hashToTileMap;
+        var tileHashes = _hexaWaveFonctCollapse.hashToTileMap;
 
         if (tileHashes == null || tileHashes.Count == 0)
         {
@@ -131,7 +131,7 @@ public class GridWaveFonctListEditor : Editor
             BigInteger hash = kvp.Key;
             List<(GameObject tilePrefab, int rotation)> tileList = kvp.Value;
             int[] fakeBorder = new int[6];
-           fakeBorder =  _gridWaveFonctList.ReverseHash(hash, 6);
+           fakeBorder =  _hexaWaveFonctCollapse.ReverseHash(hash, 6);
            Debug.LogWarning( hash+" border : "+ string.Join(",", fakeBorder));
             //Debug.Log($"Hash: {hash}");
 

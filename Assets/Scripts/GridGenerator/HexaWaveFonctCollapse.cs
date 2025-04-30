@@ -8,7 +8,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public class GridWaveFonctList : MonoBehaviour
+public partial class HexaWaveFonctCollapse : MonoBehaviour
 {
     public float checkDelay = 1.0f; // Delay between border checks
     public SO_AllTiles allTilePrefabs; // List of all tile prefabs in SO_AllTiles.ceil of available tiles
@@ -304,7 +304,7 @@ public class GridWaveFonctList : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("nt right matching tile found");
+                    Debug.LogError("not right matching tile found");
                 }
 
                 for (int i = 0; i < directions.Count; i++)
@@ -371,47 +371,62 @@ public class GridWaveFonctList : MonoBehaviour
         return matchingTiles;
     }
 
-    private (GameObject, int) SelectBestMatchingTile(List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation, List<List<int>> borderList)
+    private (GameObject, int) SelectBestMatchingTile(
+        List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation,
+        List<List<int>> borderList)
     {
-        if (matchingTilePrefabsWithRotation.Count > 0)
-        {
-            foreach (var (tilePrefab, rotation) in matchingTilePrefabsWithRotation)
-            {
-                BaseTile baseTile = tilePrefab.GetComponent<BaseTile>();
-                if (baseTile != null)
-                {
-                    List<List<int>> tileBorders = baseTile.cellType.borders.ToList();
-                    // Rotate tileBorders according to the current rotation
-                    tileBorders = RotateBordersList(tileBorders, rotation);
-                    // Debug: Log borders of the tile and borderList for comparison
-                    Debug.Log($"Checking tile: {tilePrefab.name}, Rotation: {rotation}");
-                    Debug.Log($"Tile Borders: {string.Join(", ", tileBorders.Select(b => string.Join("-", b)))}");
-                    Debug.Log($"Target Borders: {string.Join(", ", borderList.Select(b => string.Join("-", b)))}");
-                    bool isMatch = true;
-                    for (int i = 0; i < directions.Count; i++)
-                    {
-                        int borderIndex = (i + rotation) % 6;
-                        if (!tileBorders[borderIndex].Intersect(borderList[i]).Any() && !tileBorders[borderIndex].SequenceEqual(borderList[i]))
-                        {
-                            Debug.Log($"Tile Borders Dir: {string.Join(", ", tileBorders.Select(b => string.Join("-", b)))}");
-                            isMatch = false;
-                            break;
-                        }
-                    }
+        if (matchingTilePrefabsWithRotation.Count == 0)
+            return (null, -1); // Aucun tile disponible
 
-                    if (isMatch)
-                    {
-                        Debug.LogWarning("Matched");
-                        return (tilePrefab, rotation);
-                    }
+        foreach (var (tilePrefab, rotation) in matchingTilePrefabsWithRotation)
+        {
+            BaseTile baseTile = tilePrefab.GetComponent<BaseTile>();
+            if (baseTile == null)
+            {
+                Debug.LogWarning($"Tile {tilePrefab.name} n'a pas de BaseTile.");
+                continue;
+            }
+
+            List<List<int>> originalBorders = baseTile.cellType.borders.ToList();
+            List<List<int>> rotatedBorders = RotateBordersList(originalBorders, rotation);
+
+            Debug.Log($"=== TEST TILE: {tilePrefab.name}, Rotation: {rotation} ===");
+            Debug.Log($"Tile Borders (rotated): {string.Join(" | ", rotatedBorders.Select(b => string.Join("-", b)))}");
+            Debug.Log($"Target Borders        : {string.Join(" | ", borderList.Select(b => string.Join("-", b)))}");
+
+            bool isMatch = true;
+
+            for (int i = 0; i < borderList.Count; i++)
+            {
+                List<int> target = borderList[i];
+                List<int> candidate = rotatedBorders[i];
+
+                Debug.Log($"Comparing side {i}: Candidate {string.Join("-", candidate)} | Target {string.Join("-", target)}");
+
+                bool same = candidate.SequenceEqual(target);
+                bool intersects = candidate.Intersect(target).Any();
+
+                if (!same && !intersects)
+                {
+                    Debug.LogWarning($"Mismatch on side {i}");
+                    isMatch = false;
+                    break;// incoming changges swap breaek into a radom selection type algo
                 }
+
+                Debug.Log($"Match on side {i}");
+            }
+
+            if (isMatch)
+            {
+                Debug.LogWarning($"Matched tile: {tilePrefab.name} with rotation {rotation}");
+                return (tilePrefab, rotation);
             }
         }
 
-        // Default return if no exact match is found
-        return(null,0); //matchingTilePrefabsWithRotation[0];
-
+        Debug.LogWarning("No matching tile found.");
+        return (null, -1);
     }
+
 
     private void PrecomputeTileHashes()
     {

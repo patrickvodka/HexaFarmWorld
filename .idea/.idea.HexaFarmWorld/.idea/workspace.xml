@@ -5,8 +5,37 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="4020bd07-aee0-4976-81a3-da3042cde745" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/projectSettingsUpdater.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/projectSettingsUpdater.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.HexaFarmWorld/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/BaseTileInspector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/BaseTileInspector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Editor/GridWaveFonctListEditor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Editor/GridWaveFonctListEditor.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/H_Castle.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/H_Castle.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/H_Cimetery.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/H_Cimetery.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_House_NoRoad01.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_House_NoRoad01.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_House_NoRoad02.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_House_NoRoad02.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_House_NoRoad03.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_House_NoRoad03.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H01.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H01.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H02.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H02.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H03.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H03.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H04.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H04.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H05.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H05.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H06.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H06.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H07.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H07.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H08.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H08.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H09.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H09.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H10.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H10.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H11.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H11.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H12.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/Hexagon/Houses/H_Road_H12.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/MultiFaceTile.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/MultiFaceTile.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/AllTiles.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObject/AllTiles.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Water_Grass.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/ScriptableObject/SameTile/Water_Grass.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFoncMultiFa.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFoncMultiFa.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/HexaWaveFonctCollapse.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/HexaWaveFonctCollapse.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/Hexagone3dVec.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/GridGenerator/Hexagone3dVec.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" beforeDir="false" afterPath="$PROJECT_DIR$/UserSettings/Layouts/default-2022.dwlt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +47,13 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Editor/GridWaveFonctListEditor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BaseTile.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/GridGenerator/GridWaveFonctList.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/HelpScript/ScriptHelper.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="Toolset" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 0
@@ -28,24 +63,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
-  },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\LeNot\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\LeNot\\AppData\\Roaming\\JetBrains\\Rider2024.1\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\LeNot\\AppData\\Local\\Symbols\\src&quot;
-    ]
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
     <configuration name="Start Unity" type="RunUnityExe" factoryName="Unity Executable">
       <option name="EXE_PATH" value="D:\2022.3.19f1\Editor\Unity.exe" />
@@ -53,6 +83,9 @@
       <option name="WORKING_DIRECTORY" value="C:\Users\LeNot\OneDrive\Desktop\Projet git Janvier 2024\HexaFarmWorld" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
       <method v="2" />
     </configuration>
     <configuration name="Unit Tests (batch mode)" type="RunUnityExe" factoryName="Unity Executable">
@@ -61,6 +94,9 @@
       <option name="WORKING_DIRECTORY" value="C:\Users\LeNot\OneDrive\Desktop\Projet git Janvier 2024\HexaFarmWorld" />
       <option name="PASS_PARENT_ENVS" value="1" />
       <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="ENV_FILE_PATHS" value="" />
+      <option name="REDIRECT_INPUT_PATH" value="" />
+      <option name="PTY_MODE" value="Auto" />
       <method v="2" />
     </configuration>
     <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -68,9 +104,13 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
       <option name="selectedOptions">
         <list />
       </option>
+      <option name="useMixedMode" value="false" />
       <method v="2" />
     </configuration>
     <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
@@ -78,9 +118,13 @@
       <option name="listenPortForConnections" value="false" />
       <option name="pid" />
       <option name="projectPathOnTarget" />
+      <option name="runtimes">
+        <list />
+      </option>
       <option name="selectedOptions">
         <list />
       </option>
+      <option name="useMixedMode" value="false" />
       <method v="2" />
     </configuration>
   </component>
@@ -107,12 +151,17 @@
       <workItem from="1722251259072" duration="7333000" />
       <workItem from="1722423050437" duration="9211000" />
       <workItem from="1722848258993" duration="3576000" />
+      <workItem from="1725969345439" duration="2196000" />
+      <workItem from="1726052224323" duration="3294000" />
+      <workItem from="1745924456056" duration="10618000" />
+      <workItem from="1746002740834" duration="2123000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
   <component name="UnityProjectDiscoverer">
     <option name="hasUnityReference" value="true" />
@@ -122,5 +171,23 @@
   <component name="UnityUnitTestConfiguration" currentTestLauncher="Both" />
   <component name="VcsManagerConfiguration">
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.OperationCanceledException" breakIfHandledByOtherCode="false" displayValue="System.OperationCanceledException" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.Tasks.TaskCanceledException" breakIfHandledByOtherCode="false" displayValue="System.Threading.Tasks.TaskCanceledException" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint enabled="true" type="DotNet_Exception_Breakpoints">
+          <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

@@ -16,4 +16,7 @@ MonoBehaviour:
   - {fileID: 1067982390939752205, guid: b24e73c867d75f7488ffd65190750949, type: 3}
   - {fileID: 3683099749816755998, guid: a5da46accc3de4445945042db2e65881, type: 3}
   - {fileID: 224554775205978618, guid: fe1fca888a5a34e4c9f604fdea01be5a, type: 3}
-  tileName: []
+  tileName:
+  - Bridge
+  - Water
+  - Grass
