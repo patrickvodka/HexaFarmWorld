@@ -1105,6 +1105,7 @@ MonoBehaviour:
     name: 
     prefab: {fileID: 0}
     tier: 0
+    biome: 3
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0

@@ -124,6 +124,7 @@ MonoBehaviour:
     name: Road02
     prefab: {fileID: 4704433884554963502}
     tier: 0
+    biome: 1
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0

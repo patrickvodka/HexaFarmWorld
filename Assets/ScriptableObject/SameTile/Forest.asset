@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db1f9f06fda9b974b9d5dc0ef2e39373, type: 3}
+  m_Name: Forest
+  m_EditorClassIdentifier: 
+  ceil:
+  - {fileID: 224554775205978618, guid: cb93e53668b4dcd479473d8fbcd71080, type: 3}
+  - {fileID: 224554775205978618, guid: 1d2953f78dbbaa845b683dd691f3b6f6, type: 3}
+  tileName: []
+  biome: 0

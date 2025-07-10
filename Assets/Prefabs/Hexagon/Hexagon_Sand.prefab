@@ -57,12 +57,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
       propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: faa1286b4e75e204290f99a89ea5efe3, type: 2}
+    - target: {fileID: -7511558181221131132, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
+      propertyPath: m_Materials.Array.data[1]
       value: 
       objectReference: {fileID: 2100000, guid: 18991c397839782429c7ce1dbd059352, type: 2}
     - target: {fileID: 919132149155446097, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
       propertyPath: m_Name
-      value: Hexagon_Grass
+      value: Hexagon_Sand
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -118,14 +126,14 @@ MonoBehaviour:
     name: Grass
     prefab: {fileID: 224554775205978618}
     tier: 0
-    biome: 1
+    biome: 2
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
     selectedPrefab: {fileID: 0}
-  Border_1: 0000000004000000
-  Border_2: 0000000004000000
-  Border_3: 0000000004000000
-  Border_4: 0000000004000000
-  Border_5: 0000000004000000
-  Border_6: 0000000004000000
+  Border_1: 04000000
+  Border_2: 04000000
+  Border_3: 04000000
+  Border_4: 04000000
+  Border_5: 04000000
+  Border_6: 04000000

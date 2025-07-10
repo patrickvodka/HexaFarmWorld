@@ -33,7 +33,7 @@ public class BaseTile : MonoBehaviour
         cellType.prefab = transform.gameObject;
     }
 
-    
+    //Editor only
     public void ReturnInput()
     {
         SetupArray();

@@ -370,6 +370,7 @@ MonoBehaviour:
     name: Road08
     prefab: {fileID: 0}
     tier: 0
+    biome: 1
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
