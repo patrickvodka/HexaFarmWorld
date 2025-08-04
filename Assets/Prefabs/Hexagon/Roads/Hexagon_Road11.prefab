@@ -478,6 +478,7 @@ MonoBehaviour:
     prefab: {fileID: 0}
     tier: 0
     biome: 1
+    ressourcesInfos: {fileID: 11400000, guid: dbb83816596ca418ba8a9e22424707af, type: 2}
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0

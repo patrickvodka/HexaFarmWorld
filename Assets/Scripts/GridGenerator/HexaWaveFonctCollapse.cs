@@ -16,7 +16,8 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
     private float height = 30; // Height of the hexagon
     private float width = 34.5f;
     public int radiusMap; // Radius of the hexagonal map
-
+    public FogOfWar fogOfWar;
+    public GameObject planeTrans;
     public Vector3 transCube;
     // Dictionary to store tiles on the hexagonal grid
     public Dictionary<Vector3, GameObject> HexGridDictionary = new Dictionary<Vector3, GameObject>();
@@ -128,6 +129,8 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
             {
                 Debug.LogError("Major generation problem");
             }
+
+            fogOfWar.GenerateFogTextureFromHexGrid();
         }
     }
 
@@ -217,6 +220,18 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
 
     private IEnumerator CheckBordersWithDelay(Transform targetTileTransform, bool collapseTile)
     {
+        GameObject bestTile = FindTileWithMostCollapsedNeighbors();
+        if (bestTile != null)
+        {
+        }
+        else
+        {
+            Debug.LogWarning("No tile found for border check.");
+            yield break;
+        }
+
+
+
         BaseTile baseTile = targetTileTransform?.GetComponent<BaseTile>();
         if (baseTile != null)
         {
@@ -276,36 +291,72 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                 (GameObject bestMatchingTilePrefab, int bestRotation) = SelectBestMatchingTile(matchingTilePrefabsWithRotation, borderList);
                 if (bestMatchingTilePrefab != null)
                 {
-                    GameObject newTile = Instantiate(bestMatchingTilePrefab, targetTileTransform.position,
-                        Quaternion.Euler(0, bestRotation * 60, 0), transform);
-
-                    BaseTile newBaseTile = newTile?.GetComponent<BaseTile>();
-                    if (newBaseTile != null)
+                    foreach (var tuple in matchingTilePrefabsWithRotation)
                     {
-                        newBaseTile.Initialize(baseHexCoord);
-                        newBaseTile.ReturnInput();
+                      //  Debug.LogError("Tile prefab : " + tuple.tilePrefab.name);
                     }
+                    //Debug.LogError($"BaseTile: {baseTile.name}");
+
+                    bool isSame = matchingTilePrefabsWithRotation.Any(tuple => tuple.tilePrefab.name == baseTile.gameObject.name.Replace("(Clone)", "").Trim());
+
+                    // //Debug.LogError($"isSame: {isSame}");
+                    if (isSame) // the tile is the same that the already spawned one 
+                    {
+
+                        
 
                     baseTile.ceilClass.isCollapsed = collapseTile;
-                    if (collapseTile)
-                    {
-                        HexGridNotCollapsedYet.Remove(baseHexCoord);
-                        
+
+                        if (collapseTile)
+                        {
+                            HexGridNotCollapsedYet.Remove(baseHexCoord);
+
+                        }
+                        else
+                        {
+
+                            CheckedButNotCollapsedTiles.Add(baseHexCoord);
+                        }
+
                     }
-                    else
+                    else // not the same tile after the first spawn
                     {
-                       
-                        CheckedButNotCollapsedTiles.Add(baseHexCoord);
+                        GameObject newTile = Instantiate(bestMatchingTilePrefab, targetTileTransform.position,
+                        Quaternion.Euler(0, bestRotation * 60, 0), transform);
+
+                        BaseTile newBaseTile = newTile?.GetComponent<BaseTile>();
+                        if (newBaseTile != null)
+                        {
+                            newBaseTile.Initialize(baseHexCoord);
+                            newBaseTile.ReturnInput();
+                        }
+
+
+                        baseTile.ceilClass.isCollapsed = collapseTile;
+                        if (collapseTile)
+                        {
+                            HexGridNotCollapsedYet.Remove(baseHexCoord);
+
+                        }
+                        else
+                        {
+
+                            CheckedButNotCollapsedTiles.Add(baseHexCoord);
+                        }
+
+                        Destroy(targetTileTransform.gameObject);
+
+                        HexGridDictionary[baseHexCoord] = newTile;
                     }
 
-                    Destroy(targetTileTransform.gameObject);
-
-                    HexGridDictionary[baseHexCoord] = newTile;
+                    
                 }
                 else
                 {
                     Debug.LogError("not right matching tile found");
                 }
+
+            
 
                 for (int i = 0; i < directions.Count; i++)
                 {
@@ -324,11 +375,21 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
             }
             else
             {
-                Debug.LogError("No matching tiles found ! ");
                  string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
-                Debug.LogError($"bordures pour la liste {concatenatedBorders}.");
-                
-               // baseTile.ceilClass.isCollapsed = collapseTile;
+                Debug.LogError($"No Matching Tiles found liste: {concatenatedBorders}.");
+
+                baseTile.ceilClass.isCollapsed = collapseTile;
+
+                if (collapseTile)
+                {
+                    HexGridNotCollapsedYet.Remove(baseHexCoord);
+
+                }
+                else
+                {
+
+                    CheckedButNotCollapsedTiles.Add(baseHexCoord);
+                }
             }
         }
     }
@@ -461,7 +522,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
         return borders;
     }
 
-    private Vector3 HexToWorldPosition(Vector3 hexCoord)
+    public Vector3 HexToWorldPosition(Vector3 hexCoord)
     {
         float x = (hexCoord.x + hexCoord.z * 0.5f) * width;
         float y = hexCoord.z * height ;

@@ -10,7 +10,9 @@ public class CellType
     public E_BiomeType.BiomeType biome; // current used biome for this tile
     [Tooltip("1 start from the Left top one , and it goes clockwise")]
     public List<int>[] borders = new List<int>[6]; // Liste de configurations de bordures pour les 6 côtés
-    
+    [Tooltip("Ressources type and cost of the tile")]
+    public SO_RessourcesInfos ressourcesInfos; // Liste de configurations de bordures pour les 6 côtés
+
     public CellType()
     {
         // Initialiser les 6 listes d'entiers

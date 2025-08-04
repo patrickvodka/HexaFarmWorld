@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseTile : MonoBehaviour
+public class BaseTile : MonoBehaviour, IClickable
 {
     public CellType cellType;
     public CeilClass ceilClass;
@@ -14,8 +14,6 @@ public class BaseTile : MonoBehaviour
     [HideInInspector]public List<int> Border_6= new List<int>();
     [Min(0)]
     private List<int>[] tableauDeInt = new List<int>[6] ;
-     
-    
 
     // Méthode pour initialiser la tuile
     public void Initialize(Vector3 hexCoord)
@@ -63,7 +61,22 @@ public class BaseTile : MonoBehaviour
         tableauDeInt[4] = Border_5;
         tableauDeInt[5] = Border_6;
     }
-    
+
+    #region Interface, all interfaces fonctions 
+
+     public void OnSelected()
+    {
+        Debug.Log($"{gameObject}");
+    }
+
+
+    public void OnDoubleClicked()
+    {
+
+    }
+
+    #endregion
+
 }
 
 

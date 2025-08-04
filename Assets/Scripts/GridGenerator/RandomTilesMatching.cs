@@ -89,6 +89,13 @@ public partial class  HexaWaveFonctCollapse
                 }
             }
         }
+
+        float totalWidth = ((radiusMap * 2) + 1) * width;   
+        float totalHeight = ((radiusMap*2)+1) * height;          
+
+        planeTrans.transform.localScale = new Vector3(totalWidth/10, 1, totalHeight/10);
+
+        fogOfWar.GenerateFogTextureFromHexGrid();
     }
     E_BiomeType.BiomeType GetBiomeFromNoise(float noise)
     {
