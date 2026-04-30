@@ -4,6 +4,6 @@ using UnityEngine;
 
 public interface IClickable
 {
-    void OnSelected();
+   bool OnSelected();
     void OnDoubleClicked();
 }

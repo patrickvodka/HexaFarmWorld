@@ -11,3 +11,4 @@ public class SO_RessourcesInfos : ScriptableObject
 
 
 }
+

@@ -688,7 +688,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cellType:
     name: Road12
-    prefab: {fileID: 0}
+    prefab: {fileID: 8381437020970360430}
     tier: 0
     biome: 1
     ressourcesInfos: {fileID: 11400000, guid: f7608d583363a4590bed8821c5fab42b, type: 2}

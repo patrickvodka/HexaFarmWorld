@@ -63,6 +63,7 @@ public partial class  HexaWaveFonctCollapse
                                 baseTile.Initialize(hexCoord);
                                 baseTile.ReturnInput();
                                 baseTile.ceilClass = new CeilClass(hexCoord);
+                                baseTile.cellType.prefab = prefab; // tested here
                             }
 
                             HexGridDictionary.Add(hexCoord, tileGO);
@@ -80,6 +81,7 @@ public partial class  HexaWaveFonctCollapse
                                 baseTile.Initialize(hexCoord);
                                 baseTile.ReturnInput();
                                 baseTile.ceilClass = new CeilClass(hexCoord);
+                                baseTile.cellType.prefab = prefab; //tested here 2 
                             }
 
                             HexGridDictionary.Add(hexCoord, tileGO);

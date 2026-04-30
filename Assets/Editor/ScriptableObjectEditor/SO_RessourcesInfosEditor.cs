@@ -1,40 +1,62 @@
- using UnityEngine;
 using UnityEditor;
-//[]
-[CustomEditor(typeof(SO_RessourcesInfos))]
-public class SO_RessourcesInfosEditor : Editor
+using UnityEngine;
+
+[CustomEditor(typeof(SO_ShopSlot))]
+public class SO_ShopSlotEditor : Editor
 {
-    
     SerializedProperty cost;
-    private E_Ressources.RessourceType[] RessourcesTypeEnum;
-    //private E_Ressources.RessourceType ressourcesType;
+    private E_Ressources.RessourceType[] ressourcesTypeEnum;
+
     void OnEnable()
     {
         cost = serializedObject.FindProperty("Cost");
-        RessourcesTypeEnum = (E_Ressources.RessourceType[])System.Enum.GetValues(typeof(E_Ressources.RessourceType));
-        
+        ressourcesTypeEnum = (E_Ressources.RessourceType[])System.Enum.GetValues(typeof(E_Ressources.RessourceType));
     }
-   
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        int size = RessourcesTypeEnum.Length;
         
+        // Dessine tout sauf ça
+        DrawPropertiesExcluding(serializedObject, "m_Script", "Cost","RessourceType");
+        EditorGUILayout.LabelField("", GUI.skin.horizontalSlider);
+        // EditorGUILayout.Space();
 
-        GUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Ressources", EditorStyles.boldLabel);
-        EditorGUILayout.LabelField("Cost", EditorStyles.boldLabel);
-        EditorGUILayout.EndHorizontal();
-        for (int i = 0; i < size; i++)
+        int enumSize = ressourcesTypeEnum.Length;
+
+        if (cost.arraySize != enumSize)
+            cost.arraySize = enumSize;
+
+        float lineHeight = EditorGUIUtility.singleLineHeight;
+
+        Rect rect = EditorGUILayout.GetControlRect(false, lineHeight);
+
+        float labelWidth = 120f;
+        float fieldWidth = 80f;
+        float nbrFieldWidth = 45f;
+        // Header
+        EditorGUI.LabelField(
+            new Rect(rect.x, rect.y, labelWidth, lineHeight),
+            "Ressources", EditorStyles.boldLabel);
+
+        EditorGUI.LabelField(
+            new Rect(rect.x + labelWidth, rect.y, fieldWidth, lineHeight),
+            "Cost", EditorStyles.boldLabel);
+
+        // Rows
+        for (int i = 0; i < enumSize; i++)
         {
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField($"{RessourcesTypeEnum[i]}", GUILayout.MaxWidth(100));
-            EditorGUILayout.PropertyField(cost.GetArrayElementAtIndex(i), GUIContent.none);
+            rect = EditorGUILayout.GetControlRect(false, lineHeight);
 
-            EditorGUILayout.EndHorizontal();
+            EditorGUI.LabelField(
+                new Rect(rect.x, rect.y, labelWidth, lineHeight),
+                ressourcesTypeEnum[i].ToString());
+
+            EditorGUI.PropertyField(
+                new Rect(rect.x + labelWidth, rect.y, nbrFieldWidth, lineHeight),
+                cost.GetArrayElementAtIndex(i),
+                GUIContent.none);
         }
-
 
         serializedObject.ApplyModifiedProperties();
     }

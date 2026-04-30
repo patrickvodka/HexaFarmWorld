@@ -5,7 +5,6 @@ public class BaseTile : MonoBehaviour, IClickable
 {
     public CellType cellType;
     public CeilClass ceilClass;
-    // bordures pour l'inspector
     [HideInInspector]public List<int> Border_1= new List<int>();
     [HideInInspector] public List<int> Border_2= new List<int>();
     [HideInInspector]public List<int> Border_3= new List<int>();
@@ -22,13 +21,6 @@ public class BaseTile : MonoBehaviour, IClickable
         {
             ceilClass = new CeilClass(hexCoord);
         }
-
-        if (cellType.borders == null)
-        {
-            
-        }
-
-        cellType.prefab = transform.gameObject;
     }
 
     //Editor only
@@ -64,9 +56,10 @@ public class BaseTile : MonoBehaviour, IClickable
 
     #region Interface, all interfaces fonctions 
 
-     public void OnSelected()
+     public bool OnSelected()
     {
         Debug.Log($"{gameObject}");
+        return true;
     }
 
 
