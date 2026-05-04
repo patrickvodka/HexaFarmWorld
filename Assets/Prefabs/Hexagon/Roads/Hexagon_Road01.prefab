@@ -125,7 +125,7 @@ MonoBehaviour:
     prefab: {fileID: 857079173555020526}
     tier: 0
     biome: 1
-    ressourcesInfos: {fileID: 11400000, guid: 25a148a0c61264096855e8b4a1fcda35, type: 2}
+    ressourcesInfos: {fileID: 0}
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
@@ -147,7 +147,6 @@ GameObject:
   - component: {fileID: 6835229222003925696}
   - component: {fileID: 5986486725619598618}
   - component: {fileID: 1088303178458161464}
-  - component: {fileID: 3184724219733023687}
   m_Layer: 0
   m_Name: Road
   m_TagString: Untagged
@@ -220,28 +219,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &3184724219733023687
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6474406112711161208}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8634060567236447461, guid: ae53c011d726b424eb2ed42d4032d012, type: 3}
 --- !u!1 &6843010868237500380
 GameObject:
   m_ObjectHideFlags: 0
@@ -286,7 +263,6 @@ GameObject:
   - component: {fileID: 657661867407720262}
   - component: {fileID: 3349259139495977001}
   - component: {fileID: 4365741474770378854}
-  - component: {fileID: 6010011112057005138}
   m_Layer: 0
   m_Name: Road_Angle
   m_TagString: Untagged
@@ -359,25 +335,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &6010011112057005138
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8549986986642481414}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -5890276989504606041, guid: 49509495d24c5b6498c2bffd96587395, type: 3}

@@ -6,7 +6,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Random = UnityEngine.Random;
 using Vector3 = UnityEngine.Vector3;
 
-public partial class  HexaWaveFonctCollapse
+public partial class HexaWaveFonctCollapse
 {
     private E_BiomeType.BiomeType biome;
     private void GenerateNoiseTileMap()
@@ -47,13 +47,13 @@ public partial class  HexaWaveFonctCollapse
                             {
                                 Debug.LogError("Tile == Null !!!");
                             }
-                            
+
                         }
 
                         //Debug.LogWarning($"{currentBiome}");
                         if (ValidGoBiome.Count == 0)
                         {
-                            Debug.LogError($"No prefab found for biome {currentBiome} == {GetBiomeFromNoise(noiseValue)}: {noiseValue}"); 
+                            Debug.LogError($"No prefab found for biome {currentBiome} == {GetBiomeFromNoise(noiseValue)}: {noiseValue}");
                             GameObject prefab = AllTilesGO[3];
                             GameObject tileGO = Instantiate(prefab, worldPosition, Quaternion.identity, transform);
 
@@ -92,16 +92,16 @@ public partial class  HexaWaveFonctCollapse
             }
         }
 
-        float totalWidth = ((radiusMap * 2) + 1) * width;   
-        float totalHeight = ((radiusMap*2)+1) * height;          
+        float totalWidth = ((radiusMap * 2) + 1) * width;
+        float totalHeight = ((radiusMap * 2) + 1) * height;
 
-        planeTrans.transform.localScale = new Vector3(totalWidth/10, 1, totalHeight/10);
+        planeTrans.transform.localScale = new Vector3(totalWidth / 10, 1, totalHeight / 10);
 
         fogOfWar.GenerateFogTextureFromHexGrid();
     }
     E_BiomeType.BiomeType GetBiomeFromNoise(float noise)
     {
-        if ( noise <= 0.20f) return E_BiomeType.BiomeType.Water;
+        if (noise <= 0.20f) return E_BiomeType.BiomeType.Water;
         if (noise > 0.20f && noise <= 0.30f) return E_BiomeType.BiomeType.Sand;
         if (noise > 0.30f && noise <= 0.50f) return E_BiomeType.BiomeType.Dirt;
         if (noise > 0.50f && noise <= 0.75f) return E_BiomeType.BiomeType.Forest;//forest
@@ -116,7 +116,7 @@ public partial class  HexaWaveFonctCollapse
     {
         string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
         Debug.LogWarning($"bordures pour la liste {concatenatedBorders}."); //Base debug for list 
-        
+
         List<(GameObject tilePrefab, int rotation)> matchingTiles = new List<(GameObject, int)>();
         List<List<int>> SearchingList = ScriptHelper.GenerateConfigurations(borderList);
         if (SearchingList.Count > 0)
@@ -125,7 +125,7 @@ public partial class  HexaWaveFonctCollapse
             {
                 int[] borderArray = new int[6];
                 borderArray = border.ToArray();
-              //  Debug.LogWarning(string.Join(",", borderArray));
+                //  Debug.LogWarning(string.Join(",", borderArray));
                 for (int rotation = 0; rotation < 6; rotation++)
                 {
                     BigInteger hash = GetBorderHash(borderArray);
@@ -138,11 +138,12 @@ public partial class  HexaWaveFonctCollapse
                         matchingTiles.AddRange(matchingTilePrefabs);
                     }
 
-                    
+
                     borderArray = RotateBorderArray(borderArray, 1);
                 }
             }
-        }else{Debug.LogError("vide liste");}
+        }
+        else { Debug.LogError("vide liste"); }
 
         return matchingTiles;
     }
@@ -153,9 +154,9 @@ public partial class  HexaWaveFonctCollapse
     {
         if (matchingTilePrefabsWithRotation.Count == 0)
             return (null, -1); // Aucun tile disponible
-        
+
         List<(GameObject, int)> ValidTilesList = new List<(GameObject, int)>();
-        
+
         foreach (var (tilePrefab, rotation) in matchingTilePrefabsWithRotation)
         {
             BaseTile baseTile = tilePrefab.GetComponent<BaseTile>();
@@ -186,26 +187,26 @@ public partial class  HexaWaveFonctCollapse
 
                 if (!same && !intersects)
                 {
-                   // Debug.LogWarning($"Mismatch on side {i}");
+                    // Debug.LogWarning($"Mismatch on side {i}");
                     isMatch = false;
                     break;// break only the for loop
                 }
 
-               // Debug.Log($"Match on side {i}");
+                // Debug.Log($"Match on side {i}");
             }
 
             if (isMatch)
             {
                 Debug.LogWarning($"Matched tile: {tilePrefab.name} with rotation {rotation}");
                 //return (tilePrefab, rotation);
-                ValidTilesList.Add((tilePrefab,rotation));
+                ValidTilesList.Add((tilePrefab, rotation));
             }
         }
 
         if (ValidTilesList.Count > 0)
         {
             var randomNbr = Random.Range(0, ValidTilesList.Count);
-            return (ValidTilesList[randomNbr].Item1,ValidTilesList[randomNbr].Item2);
+            return (ValidTilesList[randomNbr].Item1, ValidTilesList[randomNbr].Item2);
         }
         else
         {

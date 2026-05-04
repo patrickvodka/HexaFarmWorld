@@ -1,18 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class BuyImage : MonoBehaviour, IClickable
+public class BuyImage : MonoBehaviour, IInteractable
 {
-    /*[HideInInspector]*/public SO_ShopSlot shopSlot;
-      public bool OnSelected()
+    public SO_ShopSlot shopSlot;
+
+    public bool CanInteract(InteractionContext context) => true;
+
+    public void OnInteract(InteractionContext context)
     {
-        Debug.Log($"{gameObject} + { shopSlot.Cost[0]}");
-        return true;
+        CommandInvoker.Instance.Execute(new BuyItemCommand(shopSlot));
     }
 
-    public void OnDoubleClicked()
+    public void OnDoubleInteract(InteractionContext context)
     {
-        
+        Debug.Log("Double click shop (optionnel)");
     }
 }

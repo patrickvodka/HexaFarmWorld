@@ -6,7 +6,6 @@ public  partial class GameManager : MonoBehaviour
 {
 
     public HexaWaveFonctCollapse wfc;
-    public HexaTilePainter hexaTilePainter;
     private static GameManager _instance;
 
 

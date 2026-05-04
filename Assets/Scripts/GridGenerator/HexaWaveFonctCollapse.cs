@@ -59,11 +59,11 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        if (transCube != new Vector3(0,0,0))
+
+        if (transCube != new Vector3(0, 0, 0))
         {
             Debug.Log("after" + HexGridDictionary[transCube].transform);
-           StartCoroutine(CheckBordersWithDelay(HexGridDictionary[transCube].transform, true));
+            StartCoroutine(CheckBordersWithDelay(HexGridDictionary[transCube].transform, true));
         }
     }
 
@@ -123,7 +123,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
             {
                 centerTile.ceilClass.isCollapsed = true;
                 HexGridNotCollapsedYet.Remove(new Vector3(0, 0, 0));
-                
+
             }
             else
             {
@@ -156,7 +156,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
             }
             else
             {
-               // CheckedButNotCollapsedTiles.Clear();// clear pour une nouvelle fois une fonction collapse
+                // CheckedButNotCollapsedTiles.Clear();// clear pour une nouvelle fois une fonction collapse
                 // Find next tile for a collapse check
                 GameObject bestTile = FindTileWithMostCollapsedNeighbors();
                 if (bestTile != null)
@@ -242,7 +242,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
             for (int i = 0; i < 6; i++)
             {
                 borderList.Add(new List<int>());
-                
+
             }
 
             bool hasCollapsedNeighbor = false;
@@ -254,14 +254,14 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                 if (HexGridDictionary.ContainsKey(neighborCoord))
                 {
                     BaseTile neighborTile = HexGridDictionary[neighborCoord].GetComponent<BaseTile>();
-                    if (neighborTile != null )
+                    if (neighborTile != null)
                     {
                         if (neighborTile.ceilClass.isCollapsed)
                         {
                             hasCollapsedNeighbor = true;
                             List<int> neighborBordersList = neighborTile.cellType.borders[i];
                             int neighborRotation = (int)(neighborTile.transform.rotation.eulerAngles.y / 60);
-                            int borderIndex = (i + 3 - neighborRotation+6) % 6;
+                            int borderIndex = (i + 3 - neighborRotation + 6) % 6;
 
                             borderList[i] = new List<int>(neighborTile.cellType.borders[borderIndex]);
                             //Debug.LogWarning($"borderIndex {borderIndex} is out of range for neighborBordersList with length {neighborBordersList.Count} GO: {baseTile.transform.gameObject}");
@@ -270,7 +270,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                         {
                             List<int> neighborBordersList = neighborTile.cellType.borders[i];
                             int neighborRotation = (int)(neighborTile.transform.rotation.eulerAngles.y / 60);
-                            int borderIndex = (i + 3 - neighborRotation+6) % 6;  
+                            int borderIndex = (i + 3 - neighborRotation + 6) % 6;
                             borderList[i] = new List<int>(neighborTile.cellType.borders[borderIndex]);
                         }
 
@@ -283,7 +283,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                 }
             }
 
-        
+
             List<(GameObject tilePrefab, int rotation)> matchingTilePrefabsWithRotation = FindMatchingTilePrefabsWithRotation(borderList);
             if (matchingTilePrefabsWithRotation.Count > 0)
             {
@@ -293,7 +293,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                 {
                     foreach (var tuple in matchingTilePrefabsWithRotation)
                     {
-                      //  Debug.LogError("Tile prefab : " + tuple.tilePrefab.name);
+                        //  Debug.LogError("Tile prefab : " + tuple.tilePrefab.name);
                     }
                     //Debug.LogError($"BaseTile: {baseTile.name}");
 
@@ -303,9 +303,9 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                     if (isSame) // the tile is the same that the already spawned one 
                     {
 
-                        
 
-                    baseTile.ceilClass.isCollapsed = collapseTile;
+
+                        baseTile.ceilClass.isCollapsed = collapseTile;
 
                         if (collapseTile)
                         {
@@ -349,14 +349,14 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                         HexGridDictionary[baseHexCoord] = newTile;
                     }
 
-                    
+
                 }
                 else
                 {
                     Debug.LogError("not right matching tile found");
                 }
 
-            
+
 
                 for (int i = 0; i < directions.Count; i++)
                 {
@@ -375,7 +375,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
             }
             else
             {
-                 string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
+                string concatenatedBorders = string.Join(",", borderList.SelectMany(subList => subList));//Base debug for list 
                 Debug.LogError($"No Matching Tiles found liste: {concatenatedBorders}.");
 
                 baseTile.ceilClass.isCollapsed = collapseTile;
@@ -436,13 +436,13 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                         {
                             List<(GameObject, int)> checkList = new List<(GameObject, int)>();
                             List<(GameObject, int)> tileList = new List<(GameObject, int)>();
-                            tileList.Add((tilePrefab,rotation));
+                            tileList.Add((tilePrefab, rotation));
                             bool isInList = false;
-                            if (hashToTileMap.TryGetValue(hash,out checkList))
+                            if (hashToTileMap.TryGetValue(hash, out checkList))
                             {
                                 foreach (var check in checkList)
                                 {
-                                    if( check.Item1 == tilePrefab && check.Item2 == rotation)
+                                    if (check.Item1 == tilePrefab && check.Item2 == rotation)
                                     {
                                         //Debug.LogError($"{check.Item1}_{check.Item2} est ! :  {tilePrefab}_{rotation}");
                                         isInList = true;
@@ -457,7 +457,7 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
                                 {
                                     hashToTileMap[hash].Add((tilePrefab, rotation));
                                 }
-                               
+
                             }
                         }
 
@@ -507,8 +507,8 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
         }
         return hash;
     }
-    
-    public  int[] ReverseHash(BigInteger hash, int length)
+
+    public int[] ReverseHash(BigInteger hash, int length)
     {
         int[] borders = new int[length];
         BigInteger tempHash = hash;
@@ -525,8 +525,27 @@ public partial class HexaWaveFonctCollapse : MonoBehaviour
     public Vector3 HexToWorldPosition(Vector3 hexCoord)
     {
         float x = (hexCoord.x + hexCoord.z * 0.5f) * width;
-        float y = hexCoord.z * height ;
+        float y = hexCoord.z * height;
 
         return new Vector3(x, 0, y);
+    }
+
+    public Vector3 FindClosestHex(Vector3 worldPos)
+    {
+        Vector3 closest = Vector3.zero;
+        float minDist = float.MaxValue;
+
+        foreach (Vector3 hexCoord in HexGridDictionary.Keys)
+        {
+            Vector3 hexWorldPos = HexToWorldPosition(hexCoord);
+            float dist = Vector3.Distance(worldPos, hexWorldPos);
+            if (dist < minDist)
+            {
+                closest = hexCoord;
+                minDist = dist;
+            }
+        }
+
+        return closest;
     }
 }

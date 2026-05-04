@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseTile : MonoBehaviour, IClickable
+public class BaseTile : MonoBehaviour, IInteractable
 {
     public CellType cellType;
     public CeilClass ceilClass;
@@ -54,18 +54,20 @@ public class BaseTile : MonoBehaviour, IClickable
         tableauDeInt[5] = Border_6;
     }
 
-    #region Interface, all interfaces fonctions 
+    #region Interfaces
+    // ===== INTERACTION =====
 
-     public bool OnSelected()
+    public bool CanInteract(InteractionContext context) => true;
+
+    public void OnInteract(InteractionContext context)
     {
-        Debug.Log($"{gameObject}");
-        return true;
+        Debug.Log($"Tile clicked on : {ceilClass.hexCoord}");
+        TileSelectionSystem.Instance.Select(this);
     }
 
-
-    public void OnDoubleClicked()
+    public void OnDoubleInteract(InteractionContext context)
     {
-
+        Debug.Log($"Double click tile : {ceilClass.hexCoord}");
     }
 
     #endregion
