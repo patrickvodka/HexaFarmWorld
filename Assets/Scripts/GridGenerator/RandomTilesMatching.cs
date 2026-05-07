@@ -54,7 +54,7 @@ public partial class HexaWaveFonctCollapse
                         if (ValidGoBiome.Count == 0)
                         {
                             Debug.LogError($"No prefab found for biome {currentBiome} == {GetBiomeFromNoise(noiseValue)}: {noiseValue}");
-                            GameObject prefab = AllTilesGO[3];
+                            GameObject prefab = AllTilesGO[0];// GameObject prefab = AllTilesGO[3];
                             GameObject tileGO = Instantiate(prefab, worldPosition, Quaternion.identity, transform);
 
                             BaseTile baseTile = tileGO?.GetComponent<BaseTile>();

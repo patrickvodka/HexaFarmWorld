@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slotName: Road04
   texture: {fileID: 10914, guid: 0000000000000000f000000000000000, type: 0}
-  Go_Tile: {fileID: 618709815643636891, guid: 5a16b4ed36178fe449e36df88aefce3e, type: 3}
+  Go_Tile: {fileID: 8612778406283115655, guid: a7cf3e6e4c91fce47be3d7a6f99b5610, type: 3}
   Cost: 0400000000000000000000000000000000000000
   RessourceType: 

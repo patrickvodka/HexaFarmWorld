@@ -7,7 +7,7 @@ public class PreviewSystem : MonoBehaviour
     private GameObject ghostInstance;
     private GameObject currentPrefab;
     private float currentRotation = 0f;
-
+    private int hexOffset = 50;// visual offset
     //getters
     public GameObject GetCurrentPrefab() => currentPrefab;
 
@@ -31,8 +31,8 @@ public class PreviewSystem : MonoBehaviour
 
         var wfc = GameManager.Instance.wfc;
         Vector3 hex = wfc.FindClosestHex(worldPos);
-
-        ghostInstance.transform.position = wfc.HexToWorldPosition(hex);
+        var newPos = wfc.HexToWorldPosition(hex);
+        ghostInstance.transform.position = new Vector3(newPos.x,newPos.y+hexOffset,newPos.z);
         ghostInstance.transform.rotation = Quaternion.Euler(0, currentRotation, 0);
     }
 

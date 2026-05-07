@@ -365,6 +365,7 @@ GameObject:
   - component: {fileID: 4017797790519988166}
   - component: {fileID: 717058356116259187}
   - component: {fileID: 3477344279470018243}
+  - component: {fileID: 2923653991032773681}
   m_Layer: 0
   m_Name: H_Road_T02
   m_TagString: Untagged
@@ -460,6 +461,34 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -4575734979276873811, guid: a7fc01fb586cae7408d0fd1319b1bdb0, type: 3}
+--- !u!114 &2923653991032773681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069564909877363042}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9db6663a9e6e1a4cab681eee4335bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cellType:
+    name: 
+    prefab: {fileID: 0}
+    tier: 0
+    biome: 0
+    ressourcesInfos: {fileID: 0}
+  ceilClass:
+    hexCoord: {x: 0, y: 0, z: 0}
+    isCollapsed: 0
+    selectedPrefab: {fileID: 0}
+  Border_1: 
+  Border_2: 
+  Border_3: 
+  Border_4: 
+  Border_5: 
+  Border_6: 
 --- !u!1001 &1412781897309196818
 PrefabInstance:
   m_ObjectHideFlags: 0

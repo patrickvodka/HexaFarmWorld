@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 3683099749816755998}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.5, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -52,6 +52,7 @@ MonoBehaviour:
     prefab: {fileID: 3683099749816755998}
     tier: 0
     biome: 0
+    ressourcesInfos: {fileID: 0}
   ceilClass:
     hexCoord: {x: 0, y: 0, z: 0}
     isCollapsed: 0
@@ -90,7 +91,6 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c30fc49a1b068ad43889aed978a203cb, type: 2}
   - {fileID: 2100000, guid: c30fc49a1b068ad43889aed978a203cb, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

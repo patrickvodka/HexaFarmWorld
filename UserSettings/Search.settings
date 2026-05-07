@@ -13,6 +13,9 @@ scopes = {
 	"last_search.768FEAAC" = ""
 	"OpenInspectorPreview.768FEAAC" = "0"
 	"currentGroup.768FEAAC" = "all"
+	"last_search.310DEAF1" = "p: dir=\"Road\" "
+	"OpenInspectorPreview.310DEAF1" = "0"
+	"currentGroup.310DEAF1" = "all"
 }
 providers = {
 	packages = {
@@ -64,6 +67,9 @@ providers = {
 objectSelectors = {
 }
 recentSearches = [
+	"p: dir=\"H\" "
+	"p: dir=\"Assets\" "
+	""
 ]
 searchItemFavorites = [
 ]
@@ -72,9 +78,9 @@ showSavedSearchPanel = false
 hideTabs = false
 expandedQueries = [
 ]
-queryBuilder = false
+queryBuilder = true
 ignoredProperties = "id;name;classname;imagecontentshash"
-helperWidgetCurrentArea = "all"
+helperWidgetCurrentArea = "p:"
 disabledIndexers = ""
 minIndexVariations = 2
 findProviderIndexHelper = true
