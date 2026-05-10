@@ -23,7 +23,7 @@ public class InteractionManager : MonoBehaviour
         if (!Mouse.current.leftButton.wasPressedThisFrame)
             return;
 
-        
+
 
         bool isDouble = IsDoubleClick();
 
@@ -84,23 +84,55 @@ public class InteractionManager : MonoBehaviour
             Debug.Log("raycastWorld Didn't Hit a thing");
             return;
         }
-        if (hit.collider.TryGetComponent<IInteractable>(out var interactable))
+
+        // ==========================
+        // UNIT SELECTION
+        // =========================
+
+        if (hit.collider.TryGetComponent<IInteractable>(out var interactableUnit))
         {
-            if (interactable.CanInteract(context))
+            interactableUnit.OnInteract(context);
+        }
+
+        // ==========================
+        // TILE INTERACTION
+        // =========================
+
+        BaseTile tile = hit.collider.GetComponent<BaseTile>();
+
+        if (tile != null)
+        {
+            // ---------- MOVE UNIT ----------
+            if (UnitSelectionSystem.Instance.SelectedUnit != null)
             {
-                if (isDouble)
-                    interactable.OnDoubleInteract(context);
-                else
+                UnitSelectionSystem.Instance.MoveSelected(tile.ceilClass.hexCoord);
+
+                return;
+            }
+
+            // ---------- TILE INTERACTION ----------
+            if (hit.collider.TryGetComponent<IInteractable>(out var interactableTile))
+            {
+                if (interactableTile.CanInteract(context))
                 {
-                    interactable.OnInteract(context);
-                    CommandInvoker.Instance.Execute(new PlaceTileCommand(hit.point));
+                    if (isDouble)
+                        interactableTile.OnDoubleInteract(context);
+                    else
+                        interactableTile.OnInteract(context);
                 }
             }
-        }
-        
 
-            //CommandInvoker.Instance.Execute(new PlaceTileCommand(hit.point));
+            // ---------- BUILD SYSTEM ----------
+            if (PreviewSystem.Instance.GetCurrentPrefab() != null)
+            {
+                CommandInvoker.Instance.Execute( new PlaceTileCommand(hit.point));
+            }
+        }
     }
+
+
+    //CommandInvoker.Instance.Execute(new PlaceTileCommand(hit.point));
+
 
     void HandleHover(InteractionContext context)
     {
